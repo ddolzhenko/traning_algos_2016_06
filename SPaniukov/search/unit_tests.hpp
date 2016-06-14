@@ -1,7 +1,11 @@
-#include <vector>
-#include <string>
+#ifndef UNIT_TEST_HPP
+#define UNIT_TEST_HPP
+
 #include <iostream>
+#include <string>
+#include <iomanip>
 #include <cassert>
+#include <vector>
 
 using namespace std;
 
@@ -10,26 +14,19 @@ void test(TExpect expected, TFunc f, TParam1 param1, TParam2 param2)
 {
    auto result = f(param1, param2);
 
-   cout << "testing: " << expected << " == " << "f("
-      << param1 << ", " << param2 << ") = " << result << endl;
-   cout << string(80, '-')
-      << (expected != result ? "fail" : "ok") << endl;
+   cout << "testing: " << expected << "==" << "f(" << param1 << ", " << param2 << ")" << endl;
+   cout << string(80, '-') << endl << (expected != result ? "fail" : "ok") << endl;
+
+   if (expected != result)
+   {
+      cout << "fail";
+   }
 }
 
-ostream& operator<<(ostream& o, const std::vector<int>& data)
-{
-   o << "{";
-   for (const auto& x : data)
-      o << x << ", ";
-   return o << "}";
-}
-
-template<class TFunc>
+template <class TFunc>
 void test_search_general(TFunc base_search_func)
 {
-   auto search_func = [=](std::vector<int> v, int key) {
-      if (v.size() == 0)
-         return base_search_func(0, v.size(), key);
+   auto search_func = [=](vector<int> v, int key) {
       return base_search_func(&v[0], v.size(), key);
    };
 
@@ -37,12 +34,10 @@ void test_search_general(TFunc base_search_func)
 
    // key not in array
    typedef std::vector<int> Vec;
-   // degenerated:
+   // degenerated
    test(-1, search_func, Vec(), key);
-
    // trivial
    test(-1, search_func, Vec({ 1 }), key);
-
    // trivial2nd
    test(-1, search_func, Vec({ 1, 1 }), key);
    test(-1, search_func, Vec({ 1, 2 }), key);
@@ -52,8 +47,7 @@ void test_search_general(TFunc base_search_func)
    test(-1, search_func, Vec({ 1, 1, 4, 56, 23 }), key);
    test(-1, search_func, Vec({ 1, 1, 4, 56, 23, -100 }), key);
 
-
-   // key in array
+   //key in array
    // trivial
    test(0, search_func, Vec({ key }), key);
 
@@ -64,7 +58,16 @@ void test_search_general(TFunc base_search_func)
 
    // normal
    test(0, search_func, Vec({ key, 1, 1, 4, 56, 23 }), key);
-   test(5, search_func, Vec({ 1, 1, 4, 56, 23, key }), key);
-   test(3, search_func, Vec({ 1, 1, 4, key, 56, 23 }), key);
+   test(5, search_func, Vec({ 1, 1, 1, 4, 56, 23, key }), key);
+   test(3, search_func, Vec({ 1, 1, 1, 4, key, 56, 23 }), key);
 }
 
+ostream& operator<<(ostream& o, const vector<int>& data)
+{
+   o << "{";
+   for (const auto& x : data)
+      o << x << ", ";
+   return o << "}";
+}
+
+#endif
