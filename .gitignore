@@ -28,3 +28,16 @@
 *.out
 *.app
 *.sublime-workspace
+
+*.opendb
+*.db
+*.tlog
+*.idb
+
+*.db
+*.opendb
+*.tlog
+*.idb
+SPaniukov/search/search.vcxproj
+SPaniukov/search/search.vcxproj.filters
+
