@@ -17,10 +17,6 @@ void test(TExpect expected, TFunc f, TParam1 param1, TParam2 param2)
    cout << "testing: " << expected << "==" << "f(" << param1 << ", " << param2 << ")" << endl;
    cout << string(80, '-') << endl << (expected != result ? "fail" : "ok") << endl;
 
-   if (expected != result)
-   {
-      cout << "fail";
-   }
 }
 
 template <class TFunc>
