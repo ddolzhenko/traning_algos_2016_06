@@ -28,3 +28,7 @@
 *.out
 *.app
 *.sublime-workspace
+*.db
+*.opendb
+*.tlog
+*.idb
