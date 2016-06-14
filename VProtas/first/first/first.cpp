@@ -8,7 +8,8 @@ const int linearSearch(const int arr[], const int key);
 int main()
 {
    int arr[] = {3, 6, 7, 12 };
-   cout << linearSearch(arr, 7) << endl;
+   cout << linearSearch(arr, 12) << endl;
+   system("pause");
    return 0;
 }
 
