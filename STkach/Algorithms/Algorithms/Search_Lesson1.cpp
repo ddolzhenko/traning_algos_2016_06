@@ -1,5 +1,10 @@
+#include <cassert>
+
 int search_1(int m[], int size, int key)
 {
+	assert(m != 0);
+	assert(size >= 0);
+
 	for (int i = 0; i < size; ++i)
 	{
 		if (m[i] == key)
