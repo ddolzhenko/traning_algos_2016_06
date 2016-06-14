@@ -26,7 +26,6 @@ int search_2(int arr[], int size, int key)
 	return -1;
 }
 
-
 int search_3(int arr[], int size, int key)
 {
 	arr[size] = key;
@@ -40,12 +39,13 @@ int search_4(int arr[], int size, int key)
 {
 	int last = size -1;
 	int end = key;
-
+	int save = arr[last];
 	if (arr[last] == end) return last;
 	else arr[last] = end;
 
 	int i = 0;
 	while (arr[i] != key) i++;
+	arr[last] = save;
 	if (last != i) return i;
 	else return -1;
 }
