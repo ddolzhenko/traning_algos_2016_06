@@ -2,83 +2,22 @@
 //
 
 #include "stdafx.h"
+#include "Search_Lesson1.cpp"
+#include <iostream>
 
-int search_1(int m[], int size, int key)
-{
-	for (int i = 0; i < size; ++i)
-	{
-		if (m[i] == key)
-			return i;
-	}
-	return -1;
-}
-
-int search_2(int m[], int size, int key)
-{
-	int i = 0;
-	while (i < size)
-	{
-		if (m[i] == key)
-			return i;
-
-		++i;
-	}
-	return -1;
-}
-
-int search_3(int m[], int size, int key)
-{
-	m[size] = key;
-	int i = 0;
-
-	while (m[i] != key)
-	{
-		++i;
-	}
-
-	if (size == i)
-	{
-		return -1;
-	}
-	else
-	{
-		return i;
-	}
-}
-
-int search_4(int m[], int size, int key)
-{
-	int end = key;
-	int last = size - 1;
-
-	if (m[last] != end)
-	{
-		m[last] = end;
-	}
-	else
-	{
-		return last;
-	}
-
-	int i = 0;
-	while (m[i] != key)
-	{
-		++i;
-	}
-	if (last == i)
-	{
-		return -1;
-	}
-	else
-	{
-		return i;
-	}
-
-}
+using namespace std;
 
 
 int main()
 {
+	int array[] = { 1, 3, 4, 2, 38, 3, 5 };
+	int size = 7;
+
+	cout << search_1(array, size, 38);
+
+	char key;
+	cin >> key;
+
     return 0;
 }
 
