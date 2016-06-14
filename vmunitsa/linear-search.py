@@ -5,16 +5,23 @@ def search_linear(arr, size, search):
     return -1
 
 def binary_search(arr, size, search):
-    middle_index = int(0.5*size)
-    
+    if size == 0: return -1
+    if size == 1:
+        if arr[size - 1] == search:
+            return 0
+        else:
+            return -1
+        
+    middle_index = int(0.5*size)+1
+    print 'middle index: ', middle_index
     while (middle_index != 1):
         if arr[middle_index]  == search:
             return middle_index
 
-        if arr[middle_index] < search:
-            middle_index = int(0.5*middle_index)
+        if  search > arr[middle_index]:
+            middle_index = int(0.5*middle_index) + 1
 
-        if arr[middle_index] > search:
+        if search < arr[middle_index]:
             middle_index = int(0.5*middle_index)
 
 
