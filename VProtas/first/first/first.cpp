@@ -37,7 +37,7 @@ void test(TExpect expected, TFunc func, TParam1 param1, TParam2 param2)
 {
    auto result = func(param1, param2);
    cout << "testing: " << expected << " == " << "f(" << param1 << ", " << param2 << ") = " << result << endl;
-   cout << string(80, "-") << ((expected != result) ? "fail" : "ok") << endl;
+   cout << string(80, '-') << ((expected != result) ? "fail" : "ok") << endl;
 }
 
 template<class TFunc>
@@ -102,6 +102,7 @@ int main()
    cout << searchWithNoAdd(arr, size, 12) << endl;
    system("pause");*/
    test_search();
+   system("pause");
    return 0;
 }
 
