@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include <iostream>
-#include <iomanip>
 #include <string>
 #include <cassert>
 #include <vector>
@@ -65,37 +64,6 @@ int search3(int A[], int size, int key)
 	return -1;
 
 }
-void testSearch1(int searchNumber)
-{
-	cout << "Search:" << searchNumber << endl;
-	int(*search)(int A[], int size, int key) = 0;
-	switch (searchNumber)
-	{
-	case 1:
-		search = search1;
-		break;
-	case 2:
-		search = search2;
-		break;
-	case 3:
-		search = search3;
-		break;
-	default:
-		break;
-	}
-
-	int emptyA[1];
-	int A[] = { 1,2,3,4,5 };
-	int result = 0;
-
-	const bool result1 = -1 == search(emptyA, 0, 0);
-	const bool result2 = -1 == search(A, 5, 0);
-	const bool result3 = 2 == search(A, 5, 3);
-
-	cout << "Test with empty array  is " << result1 << endl;
-	cout << "Test with no elem in array is " << result2 << endl;
-	cout << "Test with elem in array is " << result3 << endl;
-}
 
 //Tests!!!
 template<class TExpected, class TFunc, class TParam1, class TPatam2>
@@ -158,12 +126,13 @@ void test_search_general(TFunc base_search_func)
 	test(0, search_func, Vec({ key, 1, 43, 45, 425, 23 }), key);
 	test(2, search_func, Vec({ 2, 1, key, 45, 425, 23 , -900 }), key);
 	test(6, search_func, Vec({ 2, 1, 43, 45, 425, 23 , key }), key);
-
 }
 
 void test_search()
 {
-	test_search_general(search1);
+   test_search_general(search1);
+   //test_search_general(search2);
+   test_search_general(search3);
 }
 
 
