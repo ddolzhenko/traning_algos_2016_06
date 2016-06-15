@@ -21,7 +21,7 @@ void test(TExpect expected, TFunc f, vector<int> param1, TParam2 param2)
    } 
    cout << "} ";
    cout << ", " << param2 << ")" << endl;
-   cout << string(80, '-') << endl << (expected != result ? "fail" : "ok") << endl;
+   cout << string(20, '-')<< endl << (expected != result ? "FAIL" : "OK") << endl;
 }
 
 template <class TFunc>
@@ -59,8 +59,8 @@ void test_search_general(TFunc base_search_func)
 
    // normal
    test(0, search_func, Vec({ key, 1, 1, 4, 56, 23 }), key);
-   test(5, search_func, Vec({ 1, 1, 1, 4, 56, 23, key }), key);
-   test(3, search_func, Vec({ 1, 1, 1, 4, key, 56, 23 }), key);
+   test(6, search_func, Vec({ 1, 1, 1, 4, 56, 23, key }), key);
+   test(4, search_func, Vec({ 1, 1, 1, 4, key, 56, 23 }), key);
 }
 
 /*
