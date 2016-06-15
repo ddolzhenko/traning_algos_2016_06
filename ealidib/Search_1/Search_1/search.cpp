@@ -7,9 +7,9 @@
 using namespace std;
 
 
-int search(int* A, int size, int elem);
-int search2(int* A, int size, int elem);
-int binarySearch(int* A, int size, int elem);
+int search(int A[], int size, int elem);
+int search2(int A[], int size, int elem);
+int binarySearch(int A[], int size, int elem);
 int search_linear(int A[], int size, int elem);
 
 ostream& operator<<(ostream& o, const std::vector<int>& data)
@@ -25,7 +25,7 @@ void test(TExpect expected, TFunc f, TParam1 param1, TParam2 param2)
 	auto res = f(param1, param2);
 
 	std::cout << "testing: " << expected << " == " << "f("
-		<< param1 << ", " << param2 << ")/n";
+		<< param1 << ", " << param2 << ")\n";
 	std::cout << string(80, '-')
 		<< (expected != res ? "fail" : "ok") << std::endl;
 }
@@ -34,6 +34,8 @@ template<class TFunc>
 void test_search_general(TFunc base_search_func)
 {
 	auto search_func = [=](std::vector<int> v, int key) {
+		if(v.size() == 0)
+			return base_search_func((int*)&v, v.size(), key);
 		return base_search_func(&v[0], v.size(), key);
 	};
 
@@ -53,7 +55,7 @@ void test_search_general(TFunc base_search_func)
 
 	//normal
 	test(-1, search_func, Vec({ 1, 56, 99, 45 }), key);
-	test(-1, search_func, Vec({ 1, 56, 99, 45, -100 }), key);
+	test(-1, search_func, Vec({ 1, 56, 99, 45, -100 }), key); 
 
 	//key in array
 	//trivial:
@@ -67,12 +69,18 @@ void test_search_general(TFunc base_search_func)
 	//normal
 	test(0, search_func, Vec({ key, 56, 99, 45 }), key);
 	test(5, search_func, Vec({ 1, 56, 99, 45, -100, key }), key);
-	test(5, search_func, Vec({ 1, 56, 99, key, 45, -100 }), key);
+	test(3, search_func, Vec({ 1, 56, 99, key, 45, -100 }), key);
 }
 
 void test_search()
 {
+	cout << "Simple Linear Search:\n";
 	test_search_general(search_linear);
+	cout << "\nSearch 3:\n";
+	test_search_general(search2);
+
+	cout << "\nBinary Search:\n";
+	test_search_general(binarySearch);
 }
 
 int main()
@@ -81,23 +89,7 @@ int main()
 	const int size = 5;
 	int arr[size] = { 1,2,3,4,5 };
 
-	int elem = 5;
-	int ind = search(arr, size, elem);
-
-	std::cout << "First search:\n";
-	if (ind == -1)
-		std::cout << "Elem " << elem << " doesn't exist.\n";
-	else
-		std::cout << "index of elem " << elem << " = " << ind << std::endl;
-
-	std::cout << "Second search:\n";
-	ind = search2(arr, size, elem);
-	if (ind == -1)
-		std::cout << "Elem " << elem << " doesn't exist.\n";
-	else
-		std::cout << "index of elem " << elem << " = " << ind << std::endl;
-
-	while (true) {}
+	//cout << ">>>>>>>>>>>>>>>>>>" << binarySearch(arr, 5, 0) << endl;
 	
 	return 0;
 }
@@ -115,10 +107,10 @@ int search_linear(int A[], int size, int elem)
 	return -1;
 }
 
-int search(int* A, int size, int elem)
+int search(int A[], int size, int elem)
 {
-	//assert(A != 0);
-	//assert(size >= 0);
+	assert(A != 0);
+	assert(size >= 0);
 	A[size] = elem;
 
 	int i = 0;
@@ -132,12 +124,13 @@ int search(int* A, int size, int elem)
 	return -1;
 }
 
-int search2(int* A, int size, int elem)
+int search2(int A[], int size, int elem)
 {
-	//assert(A != 0);
-	//assert(size >= 0);
+	assert(A != 0);
+	assert(size >= 0);
+	int ind = -1;
 	if (A[size-1] == elem)
-		return (size - 1);
+		ind = size - 1;
 	
 	int lastElem = A[size - 1];
 	
@@ -146,9 +139,8 @@ int search2(int* A, int size, int elem)
 	int i = 0;
 	while (A[i] != elem)
 		++i;
-
-	int ind = -1;
-	if (i != (size-1))
+	
+	if (i < (size-1))
 		ind = i;
 
 	A[size - 1] = lastElem;
@@ -156,7 +148,28 @@ int search2(int* A, int size, int elem)
 	return ind;
 }
 
-int binarySearch(int* A, int size, int elem)
+int bin_search(int A[], int min, int max, int elem)
 {
-	return -1;
+	int ind = min + (max - min) / 2;
+	
+	
+	if (elem == A[ind -1])
+		return ind -1;
+	if (elem == A[max - 1])
+		return max - 1;
+	if (ind == 0 || ind == min)
+		return -1;
+	else if (elem < A[ind -1])
+		ind = bin_search(A, min, ind, elem);
+	else if (elem > A[ind - 1])
+		ind = bin_search(A, ind, max, elem);
+	
+	return ind;
+}
+int binarySearch(int A[], int size, int elem)
+{
+	assert(A != 0);
+	assert(size >= 0);
+	int res = bin_search(A, 0, size, elem);
+	return res;
 }
