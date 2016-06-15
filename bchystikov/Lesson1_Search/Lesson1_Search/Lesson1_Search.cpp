@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include <iostream>
-#include <iomanip>
 #include <string>
 #include <cassert>
 #include <vector>
@@ -127,13 +126,12 @@ void test_search_general(TFunc base_search_func)
 	test(0, search_func, Vec({ key, 1, 43, 45, 425, 23 }), key);
 	test(2, search_func, Vec({ 2, 1, key, 45, 425, 23 , -900 }), key);
 	test(6, search_func, Vec({ 2, 1, 43, 45, 425, 23 , key }), key);
-
 }
 
 void test_search()
 {
    test_search_general(search1);
-   test_search_general(search2);
+   //test_search_general(search2);
    test_search_general(search3);
 }
 
