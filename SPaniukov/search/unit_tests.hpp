@@ -9,14 +9,19 @@
 
 using namespace std;
 
-template<class TExpect, class TFunc, class TParam1, class TParam2>
-void test(TExpect expected, TFunc f, TParam1 param1, TParam2 param2)
+template<class TExpect, class TFunc, class TParam2>
+void test(TExpect expected, TFunc f, vector<int> param1, TParam2 param2)
 {
    auto result = f(param1, param2);
-
-   cout << "testing: " << expected << "==" << "f(" << param1 << ", " << param2 << ")" << endl;
+   cout << "testing: " << expected << "==" << "f(";
+   cout << "{";
+   for (size_t i = 0; i < param1.size(); i++)
+   {
+      cout << param1[i] << ", ";
+   } 
+   cout << "} ";
+   cout << ", " << param2 << ")" << endl;
    cout << string(80, '-') << endl << (expected != result ? "fail" : "ok") << endl;
-
 }
 
 template <class TFunc>
@@ -58,6 +63,7 @@ void test_search_general(TFunc base_search_func)
    test(3, search_func, Vec({ 1, 1, 1, 4, key, 56, 23 }), key);
 }
 
+/*
 ostream& operator<<(ostream& o, const vector<int>& data)
 {
    o << "{";
@@ -65,5 +71,5 @@ ostream& operator<<(ostream& o, const vector<int>& data)
       o << x << ", ";
    return o << "}";
 }
-
+*/
 #endif
