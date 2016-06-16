@@ -65,7 +65,7 @@ int search_3(int M[], int size, int key)
 	return -1;
 }
 
-int binarySearch(int M[], int size, int key)
+int binarySearch(int M[], const int size, const int key)
 {
     if (0 == M || size <= 0)
     {
