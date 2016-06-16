@@ -227,8 +227,8 @@ int search_binary_r(int A[], int size, int key)
 
 int search_binary(int A[], int size, int key)
 {
-	//	assert(size>=0);
-	//	assert(std::is_sorted(A, A+size));
+//	assert(size>=0);
+//	assert(std::is_sorted(A, A+size));
 	// [0, m)[m]{m+1, size)
 
 	while(size!=0)
@@ -237,7 +237,10 @@ int search_binary(int A[], int size, int key)
 		if(key<A[m])
 			size = m;
 		else if(key>A[m])
+		{
 			A = A+m+1;
+			size -= m+1;
+		}
 		else
 			return m;
 	}
