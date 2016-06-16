@@ -42,3 +42,49 @@ int search_4(int arr[], int size, int key)
    if (last != i) return i;
    else return -1;
 }
+
+
+int binarySearchRecursive(int arr[], int size, int key)
+{
+	if (0 == size) return -1;
+
+	int middle = size / 2;
+	if ( key < arr[middle] )
+	{
+		return binarySearchRecursive(arr, middle, key);
+	}
+	else if (arr[middle] < key)
+	{
+		return middle + 1 + binarySearchRecursive(arr + middle+1, size-middle-1, key);
+	}
+	else
+	{
+		return middle;
+	}
+}
+
+int binarySearchImperative(int arr[], int size, int key)
+{
+
+	while (0 != size)
+	{
+		//[0, middle)[middle](middle+1, size]
+		int middle = size / 2;
+		if (key < arr[middle]) //[0, middle)
+		{
+			size = middle;
+		}
+		else if (arr[middle] < key)//(middle+1, size]
+		{
+			arr = arr + middle + 1;
+			size -= middle + 1;
+		}
+		else
+		{
+			return middle;
+		}
+	}
+}
+
+
+
