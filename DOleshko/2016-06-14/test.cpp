@@ -67,7 +67,7 @@ int search_3(int M[], int size, int key)
 
 int binarySearch(int M[], int size, int key)
 {
-    if (size <= 0)
+    if (0 == M || size <= 0)
     {
         return -1;
     }
@@ -101,8 +101,6 @@ int binarySearch(int M[], int size, int key)
     {
     	return -1;
     }
-
-	//return -1;
 }
 
 void printArr(int M[], int size)
@@ -167,7 +165,7 @@ void test_search_binary(TFunc base_search_func)
         //return base_search_func(&v[0], v.size(), key);
         if(v.size() == 0)
         {
-          return base_search_func(0, v.size(), key);
+        	return base_search_func(0, 0, key);
         }
         else
         {
@@ -194,7 +192,7 @@ void test_search_binary(TFunc base_search_func)
         test(1, search_func, Vec({-87, key}), key);
 
         //normal
-        test(1, search_func, Vec({10, key, 86, 92}), key);
+        test(0, search_func, Vec({key, 80, 86, 92}), key);
         test(2, search_func, Vec({10, 35, key, 86, 92}), key);
         test(4, search_func, Vec({10, 35, 56, 72, key}), key);
 }
