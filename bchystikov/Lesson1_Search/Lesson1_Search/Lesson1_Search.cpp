@@ -204,7 +204,7 @@ int main()
 	//cout << a[1] << endl;
 	//cout << 1[a] << endl;
 	//cout << a[-1] << endl;
-	//cout << &(a+1) <<endl;
+	//cout << *(a+1) <<endl;
 
 
 	system("pause");
