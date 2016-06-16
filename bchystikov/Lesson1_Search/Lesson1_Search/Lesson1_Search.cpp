@@ -3,6 +3,7 @@
 #include <string>
 #include <cassert>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -39,7 +40,7 @@ int search2(int A[], int size, int key)
 
 int search3(int A[], int size, int key)
 {
-	if (size < 1)
+	if (size == 0)
 		return -1;
 
 	int last_index = size - 1;
@@ -64,6 +65,61 @@ int search3(int A[], int size, int key)
 	return -1;
 
 }
+
+int binary_search_recurse(int A[], int size, int key)
+{
+	assert(size>=0);
+	assert(is_sorted(A, A + size));
+	//[A, A+size)
+
+	if (size == 0)
+	{
+		return -1;
+	}
+
+	int m = size / 2;
+	if (key < A[m])
+	{
+		return binary_search_recurse(A, m, key);
+	}
+	else if(A[m] < key)
+	{
+		return m + 1 + binary_search_recurse(A+m+1, size-m-1, key);//!!
+	}
+	else
+	{
+		return m;
+	}
+}
+
+int binary_search(int A[], int size, int key)
+{
+	assert(size>=0);
+	assert(is_sorted(A, A + size));
+	//[A, A+size)
+
+	while (size != 0)
+	{
+		// [0, m)[m][m+1, size)
+		int m = size / 2;
+		if (key < A[m])
+		{
+			size = m;		//[0, m)
+		}
+		else if(A[m] < key)
+		{
+			A = A + m + 1;	//[m+1, size)
+			size -= m + 1;
+		}
+		else
+		{
+			return m;
+		}
+	}
+	return -1;
+}
+
+
 
 //Tests!!!
 template<class TExpected, class TFunc, class TParam1, class TPatam2>
@@ -99,7 +155,7 @@ void test_search_general(TFunc base_search_func)
 	int key = 42;
 	//key not in array
 	//degenerated
-	test(-1, search_func, Vec(), key);
+	//test(-1, search_func, Vec(), key);
 
 	//trivial
 	test(-1, search_func, Vec({ 1 }), key);
@@ -107,11 +163,11 @@ void test_search_general(TFunc base_search_func)
 	//trivial 2
 	test(-1, search_func, Vec( { 1, 1 }), key);
 	test(-1, search_func, Vec( { 1, 2 }), key);
-	test(-1, search_func, Vec( { 2, 1 }), key);
+	//test(-1, search_func, Vec( { 2, 1 }), key);
 
 	//normal
-	test(-1, search_func, Vec({ 2, 1, 43, 45, 425, 23 }), key);
-	test(-1, search_func, Vec({ 2, 1, 43, 45, 425, 23 , -900 }), key);
+	test(-1, search_func, Vec({ 1, 2, 43, 45, 425 }), key);
+	test(-1, search_func, Vec({ 1, 2, 43, 45, 425 }), key);
 
 	//key not in array
 	//trivial
@@ -119,26 +175,37 @@ void test_search_general(TFunc base_search_func)
 
 	//trivial 2
 	test(1, search_func, Vec({ 1, key }), key);
-	test(0, search_func, Vec({ key, 2 }), key);
+	//test(0, search_func, Vec({ key, 2 }), key);
 	test(0, search_func, Vec({ key, key }), key);
 
 	//normal
-	test(0, search_func, Vec({ key, 1, 43, 45, 425, 23 }), key);
-	test(2, search_func, Vec({ 2, 1, key, 45, 425, 23 , -900 }), key);
-	test(6, search_func, Vec({ 2, 1, 43, 45, 425, 23 , key }), key);
+	//test(0, search_func, Vec({ key, 1, 43, 45, 425, 23 }), key);
+	test(2, search_func, Vec({ -900, 1, 2, key, 45, 425 }), key);
+	//test(6, search_func, Vec({ 2, 1, 43, 45, 425, 23 , key }), key);
 }
 
 void test_search()
 {
-   test_search_general(search1);
+   //test_search_general(search1);
    //test_search_general(search2);
-   test_search_general(search3);
+   //test_search_general(search3);
+	test_search_general(binary_search_recurse);
+	cout << "*******************************************\n";
+	test_search_general(binary_search_recurse);
 }
 
 
 int main()
 {
 	test_search();
+
+	//int a[] = { 1, 2, 3 };
+	//cout << a[1] << endl;
+	//cout << 1[a] << endl;
+	//cout << a[-1] << endl;
+	//cout << &(a+1) <<endl;
+
+
 	system("pause");
 	return 0;
 }
