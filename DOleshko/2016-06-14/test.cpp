@@ -73,11 +73,9 @@ int binarySearch(int M[], int size, int key)
     }
 
     int sizeLeft = size / 2;
-    std::cout << "\nsizeLeft= " << sizeLeft << std::endl;
     int binIndex = sizeLeft;
 
-
-    while ( sizeLeft > 1 ) 
+    while ( sizeLeft > 0 ) 
     {
         sizeLeft = sizeLeft / 2;
 
@@ -87,16 +85,24 @@ int binarySearch(int M[], int size, int key)
         } 
         else if (key > M[binIndex]) 
         {
-            binIndex += sizeLeft;
+            sizeLeft > 0 ? binIndex += sizeLeft : ++binIndex;
         }
         else
         {
-            binIndex -= sizeLeft;
+            binIndex = sizeLeft;
         }
     }
 
+    if (key == M[binIndex])
+    {
+    	return binIndex;
+    }
+    else
+    {
+    	return -1;
+    }
 
-	return -1;
+	//return -1;
 }
 
 void printArr(int M[], int size)
@@ -112,7 +118,7 @@ void test(TExpect expected, TFunc f, TParam1 param1, TParam2 param2)
 {
 	auto result = f(param1, param2);
 	std::cout << "\ntesting: " << expected << " = " << "f (" << param1 << ", " << param2 << ")" << std::endl;
-	std::cout << std::string(40, '-') << (expected != result ? "FAIL" : "OK");
+	std::cout << std::string(40, '-') << (expected != result ? "FAIL\n" : "OK\n");
 }
 
 template<class TFunc>
