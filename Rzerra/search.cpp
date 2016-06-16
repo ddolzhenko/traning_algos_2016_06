@@ -155,7 +155,7 @@ void test(TExpect expected, TFunc f, TParam1 param1, TParam2 param2)
 
 	cout << "testing: " << expected << " == " << "f(" 
 		<< param1 << ", " << param2 <<") = " << result << endl;
-	cout << string(80, '-') 
+	cout //<< string(80, '-') 
 		<< (expected != result ? "fail" : "ok") << endl;
 }
 
@@ -167,13 +167,33 @@ ostream& operator<<(ostream& o, const std::vector<int>& data)
 	return o << "}";
 }
 
+void sort_selection(int A[], std::size_t size)
+{
+	for (std::size_t idx_i = 0; idx_i < size - 1; idx_i++)
+	{
+		std::size_t min_idx = idx_i;
+		for (std::size_t idx_j = idx_i + 1; idx_j < size; idx_j++)
+		{
+			if (A[idx_j] < A[min_idx])
+			{
+				min_idx = idx_j;
+			}
+		}
 
+		if (min_idx != idx_i)
+		{
+			std::swap(A[idx_i], A[min_idx]);
+		}
+	}
+}
 
-int search_linear(int A[], int size, int key) {
+int search_linear(int A[], int size, int key)
+{
 	// assert(A != 0);
 	assert(size >= 0);
 
-	for(auto i = 0; i < size; ++i) {
+	for(auto i = 0; i < size; ++i)
+	{
 		if(A[i] == key)
 			return i;
 	}
@@ -181,6 +201,48 @@ int search_linear(int A[], int size, int key) {
 	return -1;
 }
 
+int search_binary_r(int A[], int size, int key)
+{
+//	assert(size>=0);
+//	assert(std::is_sorted(A, A+size));
+	// [A, (a+size))
+
+	if(size==0)
+		return -1;
+
+	int m = size<<1;
+	if(key<A[m])
+	{
+		return search_binary_r(A, m, key);
+	}
+	else if(key>A[m])
+	{
+		return m+1+search_binary_r(A+m+1, size-m-1, key);
+	}
+	else
+	{
+		return m;
+	}
+}
+
+int search_binary(int A[], int size, int key)
+{
+	//	assert(size>=0);
+	//	assert(std::is_sorted(A, A+size));
+	// [0, m)[m]{m+1, size)
+
+	while(size!=0)
+	{
+		int m = size<<1;
+		if(key<A[m])
+			size = m;
+		else if(key>A[m])
+			A = A+m+1;
+		else
+			return m;
+	}
+	return -1;
+}
 
 template<class TFunc>
 void test_search_general(TFunc base_search_func)
@@ -226,17 +288,14 @@ void test_search_general(TFunc base_search_func)
 	test(3, search_func, Vec({1, 1, 4, key, 56, 23}), key);
 }
 
-
 void test_search()
 {
-
-
-	test_search_general(search_linear);
+//	test_search_general(search_linear);
+	test_search_general(search_binary);
 }
 
-
-
-int main() {
+int main()
+{
 	test_search();
 	return 0;
 }
