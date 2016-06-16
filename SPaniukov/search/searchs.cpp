@@ -25,20 +25,6 @@ int search_2(int arr[], int size, int key)
    return -1;
 }
 
-/*
-int search_3(int arr[], int size, int key)
-{
-   //assert(arr != 0);
-   if (0 == size) return -1;
-   int * temp = arr + size;
-   *temp = key;
-   //arr[size] = key;
-   int i = 0;
-   while (arr[i] != key) i++;
-   if (size != i) return i;
-   else return -1;
-}
-*/
 int search_4(int arr[], int size, int key)
 {
   // assert(arr != 0);
