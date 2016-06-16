@@ -72,35 +72,29 @@ int binarySearch(int M[], const int size, const int key)
         return -1;
     }
 
-    int sizeLeft = size / 2;
-    int binIndex = sizeLeft;
+    int binIndex = size / 2;
+    std::cout << "\nbinIndex_0= " << binIndex << std::endl;
 
-    while ( sizeLeft > 0 ) 
+    while (binIndex >= 0 && binIndex < size) 
     {
-        sizeLeft = sizeLeft / 2;
-
+    	std::cout << "\nbinIndex= " << binIndex << std::endl;
         if (key == M[binIndex]) 
         {
             return binIndex;
         } 
         else if (key > M[binIndex]) 
         {
-            sizeLeft > 0 ? binIndex += sizeLeft : ++binIndex;
+        	std::cout << "\n>>> " << binIndex << std::endl;
+        	binIndex < size - 1 ? binIndex += (size - binIndex) / 2 : ++binIndex;
         }
         else
         {
-            binIndex = sizeLeft;
+        	std::cout << "\n<<< " << binIndex << std::endl;
+            binIndex > 0 ? binIndex = binIndex / 2 : --binIndex;
         }
     }
 
-    if (key == M[binIndex])
-    {
-    	return binIndex;
-    }
-    else
-    {
-    	return -1;
-    }
+    return -1;
 }
 
 void printArr(int M[], int size)
@@ -182,6 +176,7 @@ void test_search_binary(TFunc base_search_func)
 
         //trivial
         test(-1, search_func, Vec({1}), key);
+        test(-1, search_func, Vec({80}), key);
 
         //normal
         test(-1, search_func, Vec({-80, 95, 106, 142}), key);
