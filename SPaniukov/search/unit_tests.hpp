@@ -31,7 +31,7 @@ void test_search_general(TFunc base_search_func)
       return base_search_func(&v[0], v.size(), key);
    };
 
-   int key = 42;
+   int key = 45;
 
    // key not in array
    typedef std::vector<int> Vec;
@@ -45,8 +45,8 @@ void test_search_general(TFunc base_search_func)
    test(-1, search_func, Vec({ 2, 1 }), key);
 
    // normal
-   test(-1, search_func, Vec({ 1, 1, 4, 56, 23 }), key);
-   test(-1, search_func, Vec({ 1, 1, 4, 56, 23, -100 }), key);
+   test(3, search_func, Vec({ 1, 1, 4, 45, 56 }), key);
+   test(3, search_func, Vec({ 1, 1, 4, 45, 78, 100 }), key);
 
    //key in array
    // trivial
