@@ -84,7 +84,9 @@ int binary_search_recurse(int A[], int size, int key)
 	}
 	else if(A[m] < key)
 	{
-		return m + 1 + binary_search_recurse(A+m+1, size-m-1, key);//!!
+      int result = binary_search_recurse(A + m + 1, size - m - 1, key);
+      result = result != -1 ? m + 1 + result : result;
+		return result;
 	}
 	else
 	{
@@ -127,17 +129,17 @@ void test(TExpected expected, TFunc f, TParam1 param1, TPatam2 param2)
 {
 	auto result = f(param1, param2);
 	cout << "testing: " << expected << "== f(" << param1 << "," << param2 << ")\n";
-	if (expected == result)
-	{
+	//if (expected == result)
+	//{
 		cout << string(80, '-') << (expected != result ? "fail" : "ok") << endl;
-	}
+	//}
 }
 
 ostream & operator<<(ostream & o, const vector<int>& data)
 {
-	o << "{";
+	o << "{ ";
 	for (const auto & x : data)
-		o << x << ", ";
+		o << x << " ";
 	return o << "}";
 }
 
@@ -176,22 +178,24 @@ void test_search_general(TFunc base_search_func)
 	//trivial 2
 	test(1, search_func, Vec({ 1, key }), key);
 	//test(0, search_func, Vec({ key, 2 }), key);
-	test(0, search_func, Vec({ key, key }), key);
+   test(1, search_func, Vec({ key, key }), key);
+   //test(0, search_func, Vec({ key, key }), key);//!!!!
 
 	//normal
 	//test(0, search_func, Vec({ key, 1, 43, 45, 425, 23 }), key);
-	test(2, search_func, Vec({ -900, 1, 2, key, 45, 425 }), key);
+	test(3, search_func, Vec({ -900, 1, 2, key, 45, 425 }), key);
 	//test(6, search_func, Vec({ 2, 1, 43, 45, 425, 23 , key }), key);
 }
 
 void test_search()
 {
    //test_search_general(search1);
+   //cout << "*******************************************\n";
    //test_search_general(search2);
    //test_search_general(search3);
-	test_search_general(binary_search_recurse);
+   test_search_general(binary_search_recurse);
 	cout << "*******************************************\n";
-	test_search_general(binary_search_recurse);
+	test_search_general(binary_search);
 }
 
 
