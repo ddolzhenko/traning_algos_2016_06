@@ -59,7 +59,7 @@ int search3(int A[], int size, int key)
 
 	A[last_index] = last_element;
 
-	if (last_element != i)
+	if (last_index != i)
 		return i;
 
 	return -1;
@@ -121,8 +121,6 @@ int binary_search(int A[], int size, int key)
 	return -1;
 }
 
-
-
 //Tests!!!
 template<class TExpected, class TFunc, class TParam1, class TPatam2>
 void test(TExpected expected, TFunc f, TParam1 param1, TPatam2 param2)
@@ -144,8 +142,9 @@ ostream & operator<<(ostream & o, const vector<int>& data)
 }
 
 template<class TFunc>
-void test_search_general(TFunc base_search_func)
+void test_search_general(TFunc base_search_func, string description)
 {
+   cout << description << ":\n";
 	auto search_func = [=](vector<int> v, int key)
 	{
 		if(v.size() == 0)
@@ -189,13 +188,11 @@ void test_search_general(TFunc base_search_func)
 
 void test_search()
 {
-   //test_search_general(search1);
-   //cout << "*******************************************\n";
-   //test_search_general(search2);
-   //test_search_general(search3);
-   test_search_general(binary_search_recurse);
-	cout << "*******************************************\n";
-	test_search_general(binary_search);
+   test_search_general(search1, "SEARCH1");
+   //test_search_general(search2, "search2");
+   test_search_general(search3, "SEARCH3");
+   test_search_general(binary_search_recurse, "BINARY_SEARCH_RECURSE");
+	test_search_general(binary_search, "BINARY_SEARCH");
 }
 
 
