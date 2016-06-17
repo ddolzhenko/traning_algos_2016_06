@@ -72,30 +72,55 @@ int binarySearch(int M[], const int size, const int key)
         return -1;
     }
 
-    int binIndex = size / 2;
-    std::cout << "\nbinIndex_0= " << binIndex << std::endl;
-
-    while (binIndex >= 0 && binIndex < size) 
+    if (key == M[0])
     {
-    	std::cout << "\nbinIndex= " << binIndex << std::endl;
+        return 0;
+    }
+
+    int binIndex = size / 2;
+
+    while (binIndex > 0 ) 
+    {
         if (key == M[binIndex]) 
         {
             return binIndex;
         } 
         else if (key > M[binIndex]) 
         {
-        	std::cout << "\n>>> " << binIndex << std::endl;
-        	binIndex < size - 1 ? binIndex += (size - binIndex) / 2 : ++binIndex;
+        	binIndex += (size - binIndex) / 2;
         }
         else
         {
-        	std::cout << "\n<<< " << binIndex << std::endl;
-            binIndex > 0 ? binIndex = binIndex / 2 : --binIndex;
+            binIndex = binIndex / 2;
         }
     }
 
     return -1;
 }
+/*
+int binarySearchRec(int M[], const int size, const int key)
+{
+    if (0 == size)
+    {
+        return -1;
+    }
+
+    int Mediana = size / 2;
+
+    if (key == M[Mediana])
+    {
+        return Mediana;
+    }
+    else if (key > M[Mediana]) 
+    {
+        return Mediana + binarySearchRec(M + Mediana + 1, size - Mediana - 1, key);
+    }
+    else
+    {
+        return binarySearchRec(M, size - Mediana, key);
+    }
+     
+}*/
 
 void printArr(int M[], int size)
 {
@@ -196,6 +221,8 @@ void test_search()
 {
 	//test_search_general(search_1);
     test_search_binary(binarySearch);
+    //std::cout << std::string(10, '*') << std::endl;
+    //test_search_binary(binarySearchRec);
 }
 
 std::ostream& operator<<(std::ostream& o, const std::vector<int>& data)
