@@ -184,3 +184,28 @@ TIter binary_search2(TIter b, TIter e, const T& key)
 		return lb;
 	return e;
 }
+
+template <class TIter>
+size_t count_7(TIter b, TIter e)
+{
+	return upper_bound(b, e) - lower_bound(b, e);
+}
+
+template<class TIter, class T>
+TIter upper_bound(TIter b, TIter e, const T& key)
+{
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		//[b, m)U [m] U [m+1, e)
+		if (key < *m)
+		{
+			e = m;
+		}
+		else
+		{
+			b = m + 1;
+		}
+	}
+	return b;
+}
