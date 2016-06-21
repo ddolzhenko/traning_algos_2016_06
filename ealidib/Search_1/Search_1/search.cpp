@@ -22,6 +22,19 @@ TIter binary_searchD2(TIter b, TIter e, const T & key);
 template<class TIter, class T>
 TIter lower_bound(TIter b, TIter e, const T & key);
 
+template<class TIter, class T>
+TIter upper_bound(TIter b, TIter e, const T & key);
+
+template<class TIter, class T>
+size_t count_7(TIter b, TIter e);
+
+
+int* my_lower_bound(int* b, int* e, const int & key);
+int* my_upper_bound(int* b, int* e, const int & key);
+size_t count_7(int* b, int* e);
+
+size_t remove_even(int* b, int* e, int value);
+
 ostream& operator<<(ostream& o, const std::vector<int>& data)
 {
 	o << "{";
@@ -96,13 +109,18 @@ void test_search()
 int main()
 {
 	//test_search();
-	const int size = 5;
-	int arr[size] = { 1,2,3,4,5 };
+	const int size = 6;
+	int arr[size] = { 1,2,2,3,4,5 };
 	int arr2[1] = {1};
 
-	int *ptr = NULL;
+	int new_size = remove_even(arr, arr + size, 2);
 
-	//cout << ">>>>>>>>>>>>>>>>>>" << min_search(ptr, 1) << endl;
+	cout << "new_size: " << new_size << endl;
+	for (int i = 0; i < new_size; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << endl;
 	
 	while (true);
 	return 0;
@@ -246,4 +264,68 @@ TIter lower_bound(TIter b, TIter e, const T & key)
 	}
 
 	return b;
+}
+
+template<class TIter, class T>
+TIter upper_bound(TIter b, TIter e, const T & key)
+{
+	assert(std::is_sorted(b, e));
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		// [b, m) U [m] U [m+1, e)
+		if (key < *m)
+			e = m;
+		else
+			b = m + 1;
+	}
+
+	return b;
+}
+
+template<class TIter, class T>
+size_t count_7(TIter b, TIter e)
+{
+	return upper_bound(b, e, 7) - lower_bound(b, e, 7);
+}
+
+int* my_lower_bound(int* b, int* e, const int & key)
+{
+	//assert(b < = e && std::is_sorted(b));
+	assert(e-b >= 0);
+	while (b < e)
+	{
+		
+	}
+	return b;
+}
+int* my_upper_bound(int* b, int* e, const int & key)
+{
+	return b;
+}
+size_t count_7(int* b, int* e)
+{
+	return my_upper_bound(b, e, 7) - my_lower_bound(b, e, 7);
+}
+
+size_t remove_even(int * b, int * e, int value)
+{
+	assert(e - b >= 0);
+
+	while (b < e)
+	{
+		if (*b == value)
+		{
+			cout << *b << " :: ";
+			int * tmp = b;		
+			b = b + 1;
+			delete tmp;
+			tmp = NULL;
+			cout << *b << endl;
+		}
+		else
+			++b;
+	}
+
+	return e - b;
 }
