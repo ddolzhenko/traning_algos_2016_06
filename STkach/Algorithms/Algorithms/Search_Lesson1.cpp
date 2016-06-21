@@ -131,3 +131,56 @@ int binary_search(int A[], int size, int key)
 	return -1;
 }
 
+template<class TIter, class T>
+TIter binary_search(TIter b, TIter e, const T& key)
+{
+	assert(std::is_sorted(b, e));
+	auto end = e;
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		if (key < *m)
+		{
+			e = m;
+		}
+		else if(*m < key)
+		{
+			b = m + 1;
+		}
+		else
+		{
+			return m;
+		}
+	}
+}
+
+//lower_bound()
+
+template<class TIter, class T>
+TIter lower_bound(TIter b, TIter e, const T& key)
+{
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		//[b, m)U [m] U [m+1, e)
+		if (*m < key)
+		{
+			b = m + 1; // m+1, e
+		}
+		else
+		{
+			e = m; //[b, m)
+		}
+	}
+	return b;
+}
+
+template<class TIter, class T>
+TIter binary_search2(TIter b, TIter e, const T& key)
+{
+	auto lb = lower_bound(b, e, key);
+
+	if (lb != e && *lb == key)
+		return lb;
+	return e;
+}

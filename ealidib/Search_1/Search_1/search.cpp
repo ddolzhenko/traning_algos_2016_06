@@ -11,6 +11,29 @@ int search(int A[], int size, int elem);
 int search2(int A[], int size, int elem);
 int binarySearch(int A[], int size, int elem);
 int search_linear(int A[], int size, int elem);
+int* min_search(int *b, int *e);
+
+template <class TIter, class T>
+TIter binary_searchD(TIter b, TIter e, const T& key);
+
+template<class TIter, class T>
+TIter binary_searchD2(TIter b, TIter e, const T & key);
+
+template<class TIter, class T>
+TIter lower_bound(TIter b, TIter e, const T & key);
+
+template<class TIter, class T>
+TIter upper_bound(TIter b, TIter e, const T & key);
+
+template<class TIter, class T>
+size_t count_7(TIter b, TIter e);
+
+
+int* my_lower_bound(int* b, int* e, const int & key);
+int* my_upper_bound(int* b, int* e, const int & key);
+size_t count_7(int* b, int* e);
+
+size_t remove_even(int* b, int* e, int value);
 
 ostream& operator<<(ostream& o, const std::vector<int>& data)
 {
@@ -85,12 +108,21 @@ void test_search()
 
 int main()
 {
-	test_search();
-	const int size = 5;
-	int arr[size] = { 1,2,3,4,5 };
+	//test_search();
+	const int size = 6;
+	int arr[size] = { 1,2,2,3,4,5 };
+	int arr2[1] = {1};
 
-	//cout << ">>>>>>>>>>>>>>>>>>" << binarySearch(arr, 5, 0) << endl;
+	int new_size = remove_even(arr, arr + size, 2);
+
+	cout << "new_size: " << new_size << endl;
+	for (int i = 0; i < new_size; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << endl;
 	
+	while (true);
 	return 0;
 }
 
@@ -105,6 +137,19 @@ int search_linear(int A[], int size, int elem)
 	}
 
 	return -1;
+}
+
+int* min_search(int *b, int *e)
+{ 
+	int *min = b;
+	while (b < e)
+	{
+		if (*b < *min)
+			*min = *b;
+		++b;
+	}
+
+	return min;
 }
 
 int search(int A[], int size, int elem)
@@ -172,4 +217,115 @@ int binarySearch(int A[], int size, int elem)
 	assert(size >= 0);
 	int res = bin_search(A, 0, size, elem);
 	return res;
+}
+
+template<class TIter, class T>
+TIter binary_searchD(TIter b, TIter e, const T & key)
+{
+	assert(std::is_sorted(b, e));
+	auto end = e;
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		// [b, m) U [m] U [m+1, e)
+		if (key < *m)
+			e = m;
+		else if (key > *m)
+			b = m+1;
+		else
+			return m;
+	}
+		
+	return end;
+}
+
+template<class TIter, class T>
+TIter binary_searchD2(TIter b, TIter e, const T & key)
+{
+	auto lb = lower_bound(b, e, key);
+
+	if (lb != e && *lb == key)
+		return lb;
+	return e;
+}
+
+template<class TIter, class T>
+TIter lower_bound(TIter b, TIter e, const T & key)
+{
+	assert(std::is_sorted(b, e));
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		// [b, m) U [m] U [m+1, e)
+		if (key < *m)
+			e = m + 1;
+		else
+			e = m;
+	}
+
+	return b;
+}
+
+template<class TIter, class T>
+TIter upper_bound(TIter b, TIter e, const T & key)
+{
+	assert(std::is_sorted(b, e));
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		// [b, m) U [m] U [m+1, e)
+		if (key < *m)
+			e = m;
+		else
+			b = m + 1;
+	}
+
+	return b;
+}
+
+template<class TIter, class T>
+size_t count_7(TIter b, TIter e)
+{
+	return upper_bound(b, e, 7) - lower_bound(b, e, 7);
+}
+
+int* my_lower_bound(int* b, int* e, const int & key)
+{
+	//assert(b < = e && std::is_sorted(b));
+	assert(e-b >= 0);
+	while (b < e)
+	{
+		
+	}
+	return b;
+}
+int* my_upper_bound(int* b, int* e, const int & key)
+{
+	return b;
+}
+size_t count_7(int* b, int* e)
+{
+	return my_upper_bound(b, e, 7) - my_lower_bound(b, e, 7);
+}
+
+size_t remove_even(int * b, int * e, int value)
+{
+	assert(e - b >= 0);
+
+	while (b < e)
+	{
+		if (*b == value)
+		{
+			cout << *b << " :: ";
+			int * tmp = b;		
+			b = b + 1;
+			delete tmp;
+			tmp = NULL;
+			cout << *b << endl;
+		}
+		else
+			++b;
+	}
+
+	return e - b;
 }

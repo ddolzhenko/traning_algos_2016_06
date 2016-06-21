@@ -4,7 +4,6 @@
 #include <string>
 #include <typeinfo>
 #include <algorithm>
-using namespace std;
 
 int binarySearch(int A[], int size, int key);
 
@@ -80,4 +79,82 @@ int binarySearch(int A[], int size, int key)
         return middle;
     }
 }
+
+template<class TIter, class T>
+TIter binarySearch(TIter b, TIter e, const T& key)
+{
+    assert(std::is_sorted(b, e));
+    auto end = e;
+    while(b < e)
+    {
+        TIter m = b + (e-b)/2;
+        if (key < *m)
+        {
+            e = m;
+        }
+        else if (*m < key)
+        {
+            b = m;
+        }
+        else
+        {
+            return m;
+        }
+    }
+
+    return end;
+
+} 
+
+template<class TIter, class T>
+TIter lower_bound(TIter b, TIter e, const T& key)
+{
+    while(b < e)
+    {
+        TIter m = b + (e-b)/2;
+        if (*m < key)
+        {
+            b = m+1;
+        }
+        else
+        {
+            e = m;
+        }
+    }
+    return b;
+}
+
+template<class TIter, class T>
+TIter upper_bound(TIter b, TIter e, const T& key)
+{
+    while(b < e)
+    {
+        TIter m = b + (e-b)/2;
+        if (key < *m)
+        {
+            e = m;
+        }
+        else
+        {
+            b = m+1;
+        }
+    }
+    return b;
+}
+
+template<class TIter, class T>
+TIter binarySearchLowerBound(TIter b, TIter e, const T& key)
+{
+    
+    auto lb = lower_bound(b, e, key);
+
+    if (lb != e && *lb == key)
+        return lb;
+    return e;
+    
+
+} 
+
+
+
 
