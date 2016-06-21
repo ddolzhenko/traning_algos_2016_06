@@ -65,7 +65,7 @@ int binarySearchRecursive(int arr[], int size, int key)
 
 int binarySearchImperative(int arr[], int size, int key)
 {
-
+   if (0 == size) return -1;
 	while (0 != size)
 	{
 		//[0, middle)[middle](middle+1, size]
@@ -76,8 +76,8 @@ int binarySearchImperative(int arr[], int size, int key)
 		}
 		else if (arr[middle] < key)//(middle+1, size]
 		{
-			arr = arr + middle + 1;
-			size -= middle + 1;
+			arr = arr + middle;
+			size -= middle;
 		}
 		else
 		{

@@ -54,13 +54,13 @@ void test_search_general(TFunc base_search_func)
 
    // trivial2nd
    test(1, search_func, Vec({ 1, key }), key);
-   test(0, search_func, Vec({ key, 2 }), key);
+   test(0, search_func, Vec({ key, 92 }), key);
    test(0, search_func, Vec({ key, key }), key);
 
    // normal
-   test(0, search_func, Vec({ key, 1, 1, 4, 56, 23 }), key);
-   test(6, search_func, Vec({ 1, 1, 1, 4, 56, 23, key }), key);
-   test(4, search_func, Vec({ 1, 1, 1, 4, key, 56, 23 }), key);
+   test(0, search_func, Vec({ 12, 45, 56, 74, 123, 156 }), key);
+   test(5, search_func, Vec({ 1, 1, 1, 4, 23, key }), key);
+   test(4, search_func, Vec({ 1, 1, 1, 4, key, 56, 75 }), key);
 }
 
 /*
