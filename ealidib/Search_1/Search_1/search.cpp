@@ -11,6 +11,16 @@ int search(int A[], int size, int elem);
 int search2(int A[], int size, int elem);
 int binarySearch(int A[], int size, int elem);
 int search_linear(int A[], int size, int elem);
+int* min_search(int *b, int *e);
+
+template <class TIter, class T>
+TIter binary_searchD(TIter b, TIter e, const T& key);
+
+template<class TIter, class T>
+TIter binary_searchD2(TIter b, TIter e, const T & key);
+
+template<class TIter, class T>
+TIter lower_bound(TIter b, TIter e, const T & key);
 
 ostream& operator<<(ostream& o, const std::vector<int>& data)
 {
@@ -85,12 +95,16 @@ void test_search()
 
 int main()
 {
-	test_search();
+	//test_search();
 	const int size = 5;
 	int arr[size] = { 1,2,3,4,5 };
+	int arr2[1] = {1};
 
-	//cout << ">>>>>>>>>>>>>>>>>>" << binarySearch(arr, 5, 0) << endl;
+	int *ptr = NULL;
+
+	//cout << ">>>>>>>>>>>>>>>>>>" << min_search(ptr, 1) << endl;
 	
+	while (true);
 	return 0;
 }
 
@@ -105,6 +119,19 @@ int search_linear(int A[], int size, int elem)
 	}
 
 	return -1;
+}
+
+int* min_search(int *b, int *e)
+{ 
+	int *min = b;
+	while (b < e)
+	{
+		if (*b < *min)
+			*min = *b;
+		++b;
+	}
+
+	return min;
 }
 
 int search(int A[], int size, int elem)
@@ -172,4 +199,51 @@ int binarySearch(int A[], int size, int elem)
 	assert(size >= 0);
 	int res = bin_search(A, 0, size, elem);
 	return res;
+}
+
+template<class TIter, class T>
+TIter binary_searchD(TIter b, TIter e, const T & key)
+{
+	assert(std::is_sorted(b, e));
+	auto end = e;
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		// [b, m) U [m] U [m+1, e)
+		if (key < *m)
+			e = m;
+		else if (key > *m)
+			b = m+1;
+		else
+			return m;
+	}
+		
+	return end;
+}
+
+template<class TIter, class T>
+TIter binary_searchD2(TIter b, TIter e, const T & key)
+{
+	auto lb = lower_bound(b, e, key);
+
+	if (lb != e && *lb == key)
+		return lb;
+	return e;
+}
+
+template<class TIter, class T>
+TIter lower_bound(TIter b, TIter e, const T & key)
+{
+	assert(std::is_sorted(b, e));
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		// [b, m) U [m] U [m+1, e)
+		if (key < *m)
+			e = m + 1;
+		else
+			e = m;
+	}
+
+	return b;
 }
