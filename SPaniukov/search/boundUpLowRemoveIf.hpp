@@ -1,6 +1,7 @@
 #ifndef boundUpLowRemoveIf_hpp
 #define boundUpLowRemoveIf_hpp
 #include <cassert>
+#include <iostream>
 
 template<class TIter, class T>	
 TIter lowerBound(TIter begin, TIter end, const T& key)
@@ -32,23 +33,48 @@ TIter upperBound(TIter begin, TIter end, const T& key)
 	return begin;
 }
 
-template<class TIter, class T>
+template<class TIter>
+bool isEven(TIter iter)
+{
+   return !((*iter) % 2);
+}
+
+template<class TIter>
 TIter remove_even(TIter begin, TIter end)
 {
-	TIter temp = end;
-	while (begin < temp)
+   assert(begin < end);
+
+   auto temp = begin;
+	while (begin < end)
 	{
 		//[begin, even) and [even] and (even, end)
-		if ((*begin) / 2)
+		if (!isEven(begin))//[begin, even) and [even]
 		{
-			end = begin + 1;
-		}
-		else
-		{
-
-		}
-		begin++;
+         *temp = *begin;
+         temp++;
+      }
+      begin++; //(even, end)
 	}
-	return end;
+	return temp;
 }
+
+template<class TIter, class TFunc>
+TIter remove_if(TIter begin, TIter end, TFunc predicat)
+{
+   assert(begin < end);
+
+   auto temp = begin;
+   while (begin < end)
+   {
+      //[begin, even) and [even] and (even, end)
+      if (!predicat(begin))//[begin, even) and [even]
+      {
+         *temp = *begin;
+         temp++;
+      }
+      begin++; //(even, end)
+   }
+   return temp;
+}
+
 #endif
