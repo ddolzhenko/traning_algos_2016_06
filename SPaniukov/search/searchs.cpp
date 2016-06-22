@@ -65,7 +65,6 @@ int binarySearchRecursive(int arr[], int size, int key)
 
 int binarySearchImperative(int arr[], int size, int key)
 {
-
 	while (0 != size)
 	{
 		//[0, middle)[middle](middle+1, size]

@@ -33,6 +33,21 @@ TIter upperBound(TIter begin, TIter end, const T& key)
 	return begin;
 }
 
+template <class TIter, class T>
+TIter binary_search(TIter begin, TIter end, const T& key) {
+   auto lb = lowerBound(begin, end, key);
+   TIter iter = end;
+   if (lb != end && *lb == key) iter = lb;;
+   return iter;
+}
+
+
+template <class TIter>
+size_t count_7(TIter b, Titer e)
+{
+   return upperBound(b, e, 7) - lowerBound(b, e, 7);
+}
+
 template<class TIter>
 bool isEven(TIter iter)
 {
