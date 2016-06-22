@@ -12,15 +12,19 @@ int main()
 {
 	//test_search();
 
-	int a[] = {1, 3, 2, 4, 5, 6, 7};
+	int a[] = {2, 2, 3, 3, 3, 4, 5};
 
-	remove_even(a, a + 7);
+	int *n = remove_even(a, a + 7);
+
+	cout << *n << "\n";
 
 	for (int i = 0; i < 7; ++i)
 	{
 		cout << a[i];
 	}
 	
+	
+
 	char key;
 	cin >> key;
 

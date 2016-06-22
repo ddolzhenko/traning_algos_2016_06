@@ -41,14 +41,15 @@ template <class TIter>
 TIter remove_even(TIter begin, TIter end)
 {
 	int count = 0;
+	TIter l = begin;
 	while (begin < end)
 	{
-		if (!(*begin / 2))
+		if ((*begin) % 2)
 		{
-			*begin = *(begin + 1);
-			++count;
+			*l = *(begin);
+			++l;
 		}
 		++begin;
 	}
-	return end - count;
+	return l;
 }
