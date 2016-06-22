@@ -205,8 +205,6 @@ size_t count_7(TIter b, TIter e)
 	return upper_bound(b, e) - lower_bound(b, e);
 }
 
-
-
 template <class TIter, class T>
 TIter lbinary_search(TIter b, TIter e, T& key)
 {
@@ -222,23 +220,20 @@ bool isOdd(int num)
 	return num % 2 == 0;
 }
 
-template <class TIter>
-TIter remove_if_my(TIter b, TIter e)
+template <class TIter, class TPredicate>
+TIter remove_if_my(TIter b, TIter e, TPredicate predicate)
 {
-	for (auto it = b; it < e;)
+   auto right_it = b;
+   for (auto it = b; it < e;)
 	{
-		auto next_it = it+1;
-		if(isOdd(*it) && next_it != e)
+		if(predicate(*it))
 		{
-			it = next_it;
-			--e;
+         *right_it = *it;
+			++right_it;
 		}
-		else
-		{
-			++it;
-		}
+		++it;
 	}
-	return e;
+	return right_it;
 }
 
 
@@ -330,9 +325,9 @@ int main()
 	//int b[] = { 5 };
 	//cout << *find_min_elem(a, a + 3) << endl;
 	//cout << *find_min_elem(b, b + 1) << endl;
-	remove_if_my(a, a+5);
+	auto extra = remove_if_my(a, a+5, isOdd);
 
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; a[i] != *extra; ++i)
 	{
 		cout << a[i] << endl;
 	}
