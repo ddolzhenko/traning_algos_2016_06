@@ -44,10 +44,12 @@ TIter upper_bound(TIter b, TIter e, const T& key)
 }
 
 template<class TIter>
-void count_7(A[] array)
+void count_7(TIter b, TIter e)   //
 {
     int key = 7;
-    return upper_bound(b, e, key) - lower_bound(b, e, key);
+    return                          //O(1)
+        upper_bound(b, e, key) -    //O(log n)
+        lower_bound(b, e, key);     //O(log n)
 }
 
 int main()
