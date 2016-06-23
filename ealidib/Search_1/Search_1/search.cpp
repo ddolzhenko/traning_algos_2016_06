@@ -28,12 +28,16 @@ TIter upper_bound(TIter b, TIter e, const T & key);
 template<class TIter, class T>
 size_t count_7(TIter b, TIter e);
 
+template<class TIter>
+void bubble_sort(TIter b, TIter e);
+
 
 int* my_lower_bound(int* b, int* e, const int & key);
 int* my_upper_bound(int* b, int* e, const int & key);
 size_t count_7(int* b, int* e);
 
 size_t remove_even(int* b, int* e, int value);
+void sort_pair(int * b, int * e);
 
 ostream& operator<<(ostream& o, const std::vector<int>& data)
 {
@@ -110,17 +114,32 @@ int main()
 {
 	//test_search();
 	const int size = 6;
-	int arr[size] = { 1,2,2,3,4,5 };
-	int arr2[1] = {1};
+	int arr[size] = { 1,6,8,3,4,5 };
 
-	int new_size = remove_even(arr, arr + size, 2);
+	/*int new_size = remove_even(arr, arr + size, 2);
 
 	cout << "new_size: " << new_size << endl;
 	for (int i = 0; i < new_size; i++)
 	{
 		cout << arr[i] << " ";
 	}
-	cout << endl;
+	cout << endl;*/
+
+	int size2 = 5;
+	int * arr2 = new int[size2];
+	arr2[0] = 2;
+	arr2[1] = 8;
+	arr2[2] = 10;
+	arr2[3] = -1;
+	arr2[4] = 0;
+	
+	sort_pair(arr2, arr2 + size2);
+
+	for (int i = 0; i < size2; i++)
+	{
+		cout << arr2[i] << " ";
+	}
+	cout << " ::end" << endl;
 	
 	while (true);
 	return 0;
@@ -240,20 +259,20 @@ TIter binary_searchD(TIter b, TIter e, const T & key)
 }
 
 template<class TIter, class T>
-TIter binary_searchD2(TIter b, TIter e, const T & key)
+TIter binary_searchD2(TIter b, TIter e, const T & key) // v(2)  &(1)
 {
-	auto lb = lower_bound(b, e, key);
+	auto lb = lower_bound(b, e, key);		// =(1)
 
-	if (lb != e && *lb == key)
-		return lb;
+	if (lb != e && *lb == key)				// *(1) != (1) ==(1)
+		return lb;							// v(1)
 	return e;
 }
-
+// v(3) &(1) =(1) *(1) != (1) ==(1)
 template<class TIter, class T>
-TIter lower_bound(TIter b, TIter e, const T & key)
+TIter lower_bound(TIter b, TIter e, const T & key) // v(2)  &(1)
 {
 	assert(std::is_sorted(b, e));
-	while (b < e)
+	while (b < e)								
 	{
 		TIter m = b + (e - b) / 2;
 		// [b, m) U [m] U [m+1, e)
@@ -270,7 +289,7 @@ template<class TIter, class T>
 TIter upper_bound(TIter b, TIter e, const T & key)
 {
 	assert(std::is_sorted(b, e));
-	while (b < e)
+	while (b < e)						//O(1) * log n
 	{
 		TIter m = b + (e - b) / 2;
 		// [b, m) U [m] U [m+1, e)
@@ -284,11 +303,40 @@ TIter upper_bound(TIter b, TIter e, const T & key)
 }
 
 template<class TIter, class T>
-size_t count_7(TIter b, TIter e)
+size_t count_7(TIter b, TIter e) // O(1)
 {
-	return upper_bound(b, e, 7) - lower_bound(b, e, 7);
+	return						// O(1)
+		upper_bound(b, e, 7) - // O(log n) , n=e-b
+		lower_bound(b, e, 7);  // O(log n)
 }
 
+template<class TIter>
+void iter_swap(TIter i, TIter j)
+{
+	TIter = j;
+	j = i;
+	i = tmp;
+}
+
+template<class TIter>
+void bubble_sort(TIter b, TIter e)
+{
+	for (TIter i = b; i < e; ++i)
+	{
+		// [unsorted) [sorted)
+		// [b, i)     [i, e)
+		assert(is_sorted(i, e));
+		for (TIter j = b; j < i; ++j)  // [b, i)
+		{
+			// [b, j) [j, i)
+			auto next = j + 1;
+			if (*next < *j)
+				iter_swap(j, next);
+		}
+		assert(is_sorted(i, e));
+	}
+}
+ 
 int* my_lower_bound(int* b, int* e, const int & key)
 {
 	//assert(b < = e && std::is_sorted(b));
@@ -328,4 +376,32 @@ size_t remove_even(int * b, int * e, int value)
 	}
 
 	return e - b;
+}
+
+
+void sort_pair(int * b, int * e)
+{
+	for (int *i = b; i < e; ++i)
+	{
+		//iter_swap(i, min_search(i, e));
+		//assert(is_sorted(b, i));
+		for (int * j = i + 1; j < e; ++j)
+		{
+			//assert(i < j);
+			if (*j < *i)
+			{
+				cout << "less\n";
+				int *tmp = j;
+				j = i;
+				i = tmp;
+			}
+		}	
+	}
+
+	while (b != e)
+	{
+		cout << *b << " ";
+		++b;
+	}
+	cout << endl;
 }
