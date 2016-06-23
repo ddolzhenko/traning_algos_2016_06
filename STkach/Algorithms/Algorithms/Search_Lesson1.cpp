@@ -114,13 +114,13 @@ int binary_search(int A[], int size, int key)
 	assert(size >= 0);
 	//assert(std::is_sorted(A, A + size));
 
-	while (size != 0)
+	while (size != 0)				//  1
 	{
 		//[0, m)[m][m+1, size)
-		int m = size / 2;
-		if (key < A[m])
-			size = m;
-		else if (A[m] < key)
+		int m = size / 2;			//  1, +1 /
+		if (key < A[m])				//  1 <
+			size = m;				//  1
+		else if (A[m] < key)		//
 		{
 			A = A + m + 1;
 			size -= m + 1;
@@ -161,26 +161,51 @@ TIter lower_bound(TIter b, TIter e, const T& key)
 {
 	while (b < e)
 	{
-		TIter m = b + (e - b) / 2;
+		TIter m = b + (e - b) / 2;	// 4
 		//[b, m)U [m] U [m+1, e)
-		if (*m < key)
+		if (*m < key)				// 1
 		{
-			b = m + 1; // m+1, e
+			b = m + 1; // m+1, e	// 2
 		}
 		else
 		{
-			e = m; //[b, m)
+			e = m; //[b, m)			// 1
 		}
 	}
 	return b;
 }
 
 template<class TIter, class T>
-TIter binary_search2(TIter b, TIter e, const T& key)
+TIter binary_search2(TIter b, TIter e, const T& key) // O(log n)
 {
-	auto lb = lower_bound(b, e, key);
+	auto lb = lower_bound(b, e, key);	// log n
 
-	if (lb != e && *lb == key)
+	if (lb != e && *lb == key)			// O(1)
 		return lb;
 	return e;
+}
+
+template <class TIter>
+size_t count_7(TIter b, TIter e)		// O(1)
+{
+	return upper_bound(b, e) - lower_bound(b, e);	// O(1) + O(log n) + O(log n)
+}
+
+template<class TIter, class T>
+TIter upper_bound(TIter b, TIter e, const T& key)	// O(1)
+{
+	while (b < e)						// o(1) * log n
+	{
+		TIter m = b + (e - b) / 2;		//O(1)
+		//[b, m)U [m] U [m+1, e)
+		if (key < *m)
+		{
+			e = m;
+		}
+		else
+		{
+			b = m + 1;
+		}
+	}
+	return b;
 }

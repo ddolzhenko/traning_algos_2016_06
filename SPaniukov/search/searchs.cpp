@@ -65,7 +65,6 @@ int binarySearchRecursive(int arr[], int size, int key)
 
 int binarySearchImperative(int arr[], int size, int key)
 {
-
 	while (0 != size)
 	{
 		//[0, middle)[middle](middle+1, size]
@@ -86,5 +85,26 @@ int binarySearchImperative(int arr[], int size, int key)
 	}
 }
 
+int searchMinElement(int arr[], int size)
+{
+	int temp = arr[0];
+	for (int i = 0; i < size; i++)
+	{
+
+		if (arr[i] < temp) temp = arr[i];
+	}
+	return temp;
+}
 
 
+
+int* searchPointerMinElement(int* b, int* e)
+{
+	int* temp = NULL;
+	while (b < e)
+	{
+		if (*b < *temp) temp = b;
+      b++;
+	}
+	return temp;
+}

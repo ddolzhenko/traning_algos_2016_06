@@ -66,6 +66,19 @@ int search3(int A[], int size, int key)
 
 }
 
+int * find_min_elem(int * b, int * e)
+{
+	int * result = b;
+	for (; b < e; ++b)
+	{
+		if (*result > *b)
+		{
+			result = b;
+		}
+	}
+	return result;
+}
+
 int binary_search_recurse(int A[], int size, int key)
 {
 	assert(size>=0);
@@ -84,8 +97,8 @@ int binary_search_recurse(int A[], int size, int key)
 	}
 	else if(A[m] < key)
 	{
-      int result = binary_search_recurse(A + m + 1, size - m - 1, key);
-      result = result != -1 ? m + 1 + result : result;
+		int result = binary_search_recurse(A + m + 1, size - m - 1, key);
+		result = result != -1 ? m + 1 + result : result;
 		return result;
 	}
 	else
@@ -120,6 +133,109 @@ int binary_search(int A[], int size, int key)
 	}
 	return -1;
 }
+
+template <class TIter, class T>
+TIter binary_search_new(TIter b, TIter e, T& key)
+{
+	assert(is_sorted(b, e));
+	auto end = e;
+	while (b < e)
+	{
+		TIter m = b + (e-b)/2;
+		//[b, m) U [m] U [m+1, e)
+		if (key < *m)
+		{
+			e = m;		//[b, m)
+		}
+		else if(key > *m)
+		{
+			b = m + 1;	//[m+1, e)
+		}
+		else
+		{
+			return m;
+		}
+	}
+	return end;
+}
+
+template <class TIter, class T>
+TIter lower_bound(TIter b, TIter e, T& key)
+{
+	assert(is_sorted(b, e));
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		// [b, m) U [m] U [m+1, e)
+		if (*m < key) 
+		{
+			b = m+1;		//[m+1, e)
+		}
+		else
+		{
+			e = m;			//[b, m)
+		}
+	}
+	return b;
+}
+
+template <class TIter, class T>
+TIter upper_bound(TIter b, TIter e, T& key)
+{
+	assert(is_sorted(b, e));
+	while (b < e)
+	{
+		TIter m = b + (e - b) / 2;
+		// [b, m) U [m] U [m+1, e)
+		if (*m < key)
+		{
+			e = m;			//[b, m)
+		}
+		else
+		{
+			b = m + 1;		//[m+1, e)
+		}
+	}
+	return b;
+}
+
+template <class TIter>
+size_t count_7(TIter b, TIter e)
+{
+	return upper_bound(b, e) - lower_bound(b, e);
+}
+
+template <class TIter, class T>
+TIter lbinary_search(TIter b, TIter e, T& key)
+{
+	//HW: remove "==" && "!="
+	auto lb = lower_bound(b, e, key);
+	if(lb != e && *lb == key)
+		return lb;
+	return e;
+}
+
+bool isOdd(int num)
+{
+	return num % 2 == 0;
+}
+
+template <class TIter, class TPredicate>
+TIter remove_if_my(TIter b, TIter e, TPredicate predicate)
+{
+   auto right_it = b;
+   for (auto it = b; it < e;)
+	{
+		if(predicate(*it))
+		{
+         *right_it = *it;
+			++right_it;
+		}
+		++it;
+	}
+	return right_it;
+}
+
 
 //Tests!!!
 template<class TExpected, class TFunc, class TParam1, class TPatam2>
@@ -188,24 +304,44 @@ void test_search_general(TFunc base_search_func, string description)
 
 void test_search()
 {
-   test_search_general(search1, "SEARCH1");
+	test_search_general(search1, "SEARCH1");
    //test_search_general(search2, "search2");
-   test_search_general(search3, "SEARCH3");
-   test_search_general(binary_search_recurse, "BINARY_SEARCH_RECURSE");
+	test_search_general(search3, "SEARCH3");
+	test_search_general(binary_search_recurse, "BINARY_SEARCH_RECURSE");
 	test_search_general(binary_search, "BINARY_SEARCH");
 }
 
-
 int main()
 {
-	test_search();
+	//test_search();
 
-	//int a[] = { 1, 2, 3 };
-	//cout << a[1] << endl;
-	//cout << 1[a] << endl;
-	//cout << a[-1] << endl;
-	//cout << *(a+1) <<endl;
+	typedef vector<int> Vec;
+	Vec v1 = { };
+	Vec v2 = { 1 };
+	Vec v3 = { 2 };
+	Vec v4 = { 1, 2, 3, 4 };
 
+	int a[] = { 1, 2, 3, 4, 5 };
+	//int b[] = { 5 };
+	//cout << *find_min_elem(a, a + 3) << endl;
+	//cout << *find_min_elem(b, b + 1) << endl;
+	auto extra = remove_if_my(a, a+5, isOdd);
+
+	for (int i = 0; a[i] != *extra; ++i)
+	{
+		cout << a[i] << endl;
+	}
+
+
+	//remove_if_my(v1);
+	//remove_if_my(v2);
+	//remove_if_my(v3);
+	//remove_if_my(v4);
+
+	//cout << v1 << endl;
+	//cout << v2 << endl;
+	//cout << v3 << endl;
+	//cout << v4 << endl;
 
 	system("pause");
 	return 0;

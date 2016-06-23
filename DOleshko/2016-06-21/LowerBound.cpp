@@ -22,8 +22,21 @@ TIter lower_bound(TIter b, TIter e, const T& key)
     return b;
 }
 
+
 template <class TIter, class T>
-TIter binary_search(TIter b, TIter e, const T& key)
+TIter lower_bound_rec(TIter b, TIter e, const T& key)
+{
+    if (b == e)
+        return e;
+
+    (*m < key) :
+    ? return lower_bound_rec(m+1, e, key)
+    : return lower_bound_rec(b, m, key);
+
+}
+
+template <class TIter, class T>
+TIter binary_search_lb(TIter b, TIter e, const T& key)
 {
     auto lb = lower_bound(b, e);
 
