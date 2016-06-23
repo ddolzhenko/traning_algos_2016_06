@@ -109,20 +109,35 @@ TIter binarySearch(TIter b, TIter e, const T& key)
 template<class TIter, class T>
 TIter lower_bound(TIter b, TIter e, const T& key)
 {
-    while(b < e)
+    while(b < e)                //1
     {
-        TIter m = b + (e-b)/2;
-        if (*m < key)
+        TIter m = b + (e-b)/2;  //3
+        if (*m < key)           //2
         {
-            b = m+1;
+            b = m+1;            
         }
         else
         {
             e = m;
-        }
+        }                       //1
     }
     return b;
 }
+
+template<class TIter, class T>
+TIter binarySearchLowerBound(TIter b, TIter e, const T& key)
+{
+    
+    auto lb = lower_bound(b, e, key);   //3
+
+    if (lb != e && *lb == key)          //3
+        return lb;
+    return e;                           //1
+
+    //7*log(n) + 7
+    
+
+} 
 
 template<class TIter, class T>
 TIter upper_bound(TIter b, TIter e, const T& key)
@@ -141,19 +156,6 @@ TIter upper_bound(TIter b, TIter e, const T& key)
     }
     return b;
 }
-
-template<class TIter, class T>
-TIter binarySearchLowerBound(TIter b, TIter e, const T& key)
-{
-    
-    auto lb = lower_bound(b, e, key);
-
-    if (lb != e && *lb == key)
-        return lb;
-    return e;
-    
-
-} 
 
 
 
