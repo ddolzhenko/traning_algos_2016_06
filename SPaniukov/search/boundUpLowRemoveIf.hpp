@@ -43,7 +43,7 @@ TIter binary_search(TIter begin, TIter end, const T& key) {//= 3
 
 
 template <class TIter>
-size_t count_7(TIter b, Titer e)//O(1)
+size_t count_7(TIter b, TIter e)//O(1)
 {
    return upperBound(b, e, 7) - lowerBound(b, e, 7);//O(1)+O(log n) + O(log n)== O(log n)
 }
