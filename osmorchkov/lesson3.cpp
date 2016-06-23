@@ -1,4 +1,4 @@
-int *min_search(int *b, int *e, int key)
+int *min_search(int *b, int *e)
 {
     int *min = b;
 
@@ -73,21 +73,6 @@ int *bin_search2(int *b, int *e, int key)
     return e;
 }
 
-// [0, 1, 2, 3, x, x, x, x, x, 10, 11]
-int count(int *b, int *e, int key)
-{
-    // return upper_bound - lower_bound;
-    int c = 0;
-
-    int *lb = lower_bound(b, e, key);
-
-    if (lb != e)
-    {
-        while (*lb++ == key) ++c;
-    }
-
-    return c;
-}
 
 int main()
 {
