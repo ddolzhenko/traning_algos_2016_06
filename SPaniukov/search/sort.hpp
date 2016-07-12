@@ -86,23 +86,57 @@ void insertion_sort(TIter begin, TIter end)
 }
 
 template<class TIter>
-void merge(TIter begin, TIter median, TIter end)
+void merge(TIter begin, TIter median, TIter end, TIter out_begin)
 {
+    auto out_end = out_begin;
+    auto i = begin;
+    auto j = median;
+    while (i < median && j < end)
+    {
+        if (*i < *j)
+        {
+            *out_end = *i++;
+        }
+        else
+        {
+            *out_end = *j++;
+        }
+        out_end++;
+    }
 
+    out_end = copy(i, median, out_end);
+    out_end = copy(i, end, out_end);
+
+    asssert(out_end - out_begin == end - begin);
 }
 
 template<class TIter>
-void merge_sort(TIter begin, TIter end)
+void merge_sort(TIter begin, TIter end,  buff)
 {
     //[begin, end) = [begin, median) and [median, end)
     if (1 < end - begin)
     {
         auto median = begin + (end - begin) / 2;
-        merge_sort(begin, median);
-        merge_sort(median, end);
-        merge(begin, median, end);
+        merge_sort(begin, median, buff);
+        merge_sort(median, end, buff);
+        merge(begin, median, end, buff);
+        copy(buff, buff + (end - begin), begin);
     }
 }
 
+template<class T>
+void merge_sort_helper(std::vector<T>& v, std::vector<T>& buff)
+{
+    if (v.size() < 2) return;
+    auto median = v.size() / 2;
+
+}
+
+template<class T>
+void merge_sort2(std::vector<T>& v)
+{
+    std::vector<T> buff(v.size());
+    merge_sort_helper(v, buff);
+}
 
 #endif 
