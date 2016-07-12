@@ -37,7 +37,7 @@ void merge(int *b, int* m, int *e, int []output)
 
 void merge_sort(int *b, int *e, int []buffer)
 {
-    if (e - b > 1) // size at least == 2
+    if (e - b > 1) //size at least == 2
     {
         // [b, e) = [b, m) U [m, e)
         int *m = b + (e - b) / 2;
