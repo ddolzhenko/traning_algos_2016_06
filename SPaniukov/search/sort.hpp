@@ -111,17 +111,32 @@ void merge(TIter begin, TIter median, TIter end, TIter out_begin)
 }
 
 template<class TIter>
-void merge_sort(TIter begin, TIter end)
+void merge_sort(TIter begin, TIter end,  buff)
 {
     //[begin, end) = [begin, median) and [median, end)
     if (1 < end - begin)
     {
         auto median = begin + (end - begin) / 2;
-        merge_sort(begin, median);
-        merge_sort(median, end);
-        merge(begin, median, end);
+        merge_sort(begin, median, buff);
+        merge_sort(median, end, buff);
+        merge(begin, median, end, buff);
+        copy(buff, buff + (end - begin), begin);
     }
 }
 
+template<class T>
+void merge_sort_helper(std::vector<T>& v, std::vector<T>& buff)
+{
+    if (v.size() < 2) return;
+    auto median = v.size() / 2;
+
+}
+
+template<class T>
+void merge_sort2(std::vector<T>& v)
+{
+    std::vector<T> buff(v.size());
+    merge_sort_helper(v, buff);
+}
 
 #endif 
