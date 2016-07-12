@@ -85,4 +85,24 @@ void insertion_sort(TIter begin, TIter end)
 	}
 }
 
+template<class TIter>
+void merge(TIter begin, TIter median, TIter end)
+{
+
+}
+
+template<class TIter>
+void merge_sort(TIter begin, TIter end)
+{
+    //[begin, end) = [begin, median) and [median, end)
+    if (1 < end - begin)
+    {
+        auto median = begin + (end - begin) / 2;
+        merge_sort(begin, median);
+        merge_sort(median, end);
+        merge(begin, median, end);
+    }
+}
+
+
 #endif 
