@@ -86,9 +86,28 @@ void insertion_sort(TIter begin, TIter end)
 }
 
 template<class TIter>
-void merge(TIter begin, TIter median, TIter end)
+void merge(TIter begin, TIter median, TIter end, TIter out_begin)
 {
+    auto out_end = out_begin;
+    auto i = begin;
+    auto j = median;
+    while (i < median && j < end)
+    {
+        if (*i < *j)
+        {
+            *out_end = *i++;
+        }
+        else
+        {
+            *out_end = *j++;
+        }
+        out_end++;
+    }
 
+    out_end = copy(i, median, out_end);
+    out_end = copy(i, end, out_end);
+
+    asssert(out_end - out_begin == end - begin);
 }
 
 template<class TIter>
