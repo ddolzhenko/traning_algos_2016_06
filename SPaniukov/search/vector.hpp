@@ -94,6 +94,5 @@ public:
 private:
     *T m_data;
     size_t m_size;
-    site_t, m_capacity;
-
+    site_t m_capacity;
 };
