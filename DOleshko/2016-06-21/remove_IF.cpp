@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 
 template <class TValue>
@@ -9,8 +10,14 @@ public:
 }; 
 
 
-template <class TIter, evenPredicate>
-TIter remove_IF(TIter b, TIter e, evenPredicate f)
+template <class TValue>
+bool even(TValue V)
+{
+    return (V % 2 == 0);
+}
+
+template <class TIter, class F>
+TIter remove_IF(TIter b, TIter e, F f)
 {
     // b < e
 
@@ -38,18 +45,28 @@ TIter remove_IF(TIter b, TIter e, evenPredicate f)
         ++it;
     }
 
-    return b;
+    return itRightEnd;
 };
 
-template <class TValue>
-bool even(TValue V)
-{
-    return (*V % 2 == 0);
-}
+
 
 int main()
 {
     std::vector<int> v({0, 1, 12, 40, 33, 56, 23, 0});
+
+    auto itIF = remove_IF(v.begin(), v.end(), even<int>);
+
+    for (auto i: v)
+    {
+        std::cout << i << ' ';
+    }
+
+    std::cout << "\n";
+
+    for (auto it = v.begin(); it < itIF; ++it)
+    {
+        std::cout << *it << ' ';
+    }    
 
     return 0;
 }
