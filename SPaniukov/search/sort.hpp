@@ -140,13 +140,53 @@ void merge_sort2(std::vector<T>& v)
 }
 
 template <class T>
-void partition(begin, end, pivot)
+T partition_hoar(T begin, T end)
 {
-    for (T iter = begin; iter != end; iter++)
+    // [begin, Bunsorted) U [Bunsorted, Eunsorted) U [Eunsorted, end)
+    assert(end - begin > 0);
+    auto pivot = end-1;
+    T left = begin;
+    T right = pivot;
+    auto pivot_value = *pivot;
+    while (left < right)
     {
-        if (*pivot =< *iter) swap(pivot, iter);
-        assert(*max_element(begin, pivot) < *pivot);
+        if (*left < pivot_value)
+        {
+            left++;
+        }
+        else
+        {
+            iter_swap(left, right - 1);
+            right--;
+        }        
     }
+    iter_swap(pivot, right);
+    return right;
+}
+
+template <class T>
+T partition(T begin, T end, T pivot)
+{
+    //[<)[>=)[unsorted)
+    // [begin, bg) U [bg, eg) U [eg, end)
+    iter_swap(pivot, end - 1);
+    pivot = end - 1;
+    auto pivot_value = *pivot;
+    auto bg = begin;
+    auto eg = end;
+    while (eg < end)
+    {
+        //assert(*max_element(b, bg) < pivot_value);
+        //assert(*min_element(bg, eg) >= pivot_value);
+        if (*eg < pivot_value)
+        {
+            iter_swap(bg, eg);
+            bg++;
+        }
+        eg++;
+    }
+    iter_swap(pivot, eg);
+    return eg;
 }
 
 template <class T>
@@ -155,7 +195,7 @@ void quick_sort(T begin, T end)
     if (end - begin < 2) return;
 
     auto pivot = begin;
-    partition(begin, end, pivot);
+    pivot = partition(begin, end, pivot);
 
     assert(*max_element(begin, pivot) < *pivot);
     assert(*min_element(pivot, end) => *pivot);
