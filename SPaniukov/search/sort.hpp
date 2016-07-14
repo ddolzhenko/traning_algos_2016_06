@@ -139,4 +139,29 @@ void merge_sort2(std::vector<T>& v)
     merge_sort_helper(v, buff);
 }
 
+template <class T>
+void partition(begin, end, pivot)
+{
+    for (T iter = begin; iter != end; iter++)
+    {
+        if (*pivot =< *iter) swap(pivot, iter);
+        assert(*max_element(begin, pivot) < *pivot);
+    }
+}
+
+template <class T>
+void quick_sort(T begin, T end)
+{
+    if (end - begin < 2) return;
+
+    auto pivot = begin;
+    partition(begin, end, pivot);
+
+    assert(*max_element(begin, pivot) < *pivot);
+    assert(*min_element(pivot, end) => *pivot);
+   
+    quick_sort(begin, pivot);
+    quick_sort(pivot+1, end);
+}
+
 #endif 
