@@ -111,7 +111,7 @@ void merge(TIter begin, TIter median, TIter end, TIter out_begin)
 }
 
 template<class TIter>
-void merge_sort(TIter begin, TIter end,  buff)
+void merge_sort(TIter begin, TIter end,  buff)// O(n*log n) and O(n) - memory
 {
     //[begin, end) = [begin, median) and [median, end)
     if (1 < end - begin)
