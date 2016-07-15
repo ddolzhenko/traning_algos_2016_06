@@ -38,7 +38,7 @@ void merge(TIter b, TIter m, TIter e, TIter out_begin)   //O(n)
 }
 
 template <class TIter>
-void merge_sort(TIter b, TIter e, TIter buff)
+void merge_sort(TIter b, TIter e, TIter buff)   //O(n*log n) - always + O(n) дополнительной памяти
 {
    //[b, e) = [b, m) U [m, e)
    //assert(e >= b);
@@ -81,123 +81,124 @@ void merge_sort_helper(std::vector<T> & v, std::vector<T> & buff)
 template <class T>
 void merge_sort2(std::vector<T> & v)
 {
-
    std::vector<T> buff(v.size());
    merge_sort_helper(v, buff);
 }
 
+template <class TIter>
+TIter partition_my(TIter b, TIter e, TIter p)
+{
+   TIter result = p;
+
+   for (TIter i = b; i < p; ++i)
+   {
+      if (*i > *result)
+      {
+         std::swap(*i, *result);
+      }
+   }
+
+   for (TIter i = p; i < e; ++i)
+   {
+      if (*i < *result)
+      {
+         std::swap(*i, *result);
+      }
+   }
+   return result;
+}
+
+template <class TIter>
+TIter partition_hoar(TIter b, TIter e)
+{
+   assert(e-b > 0);
+   //[b, bu) U [bu, eu) U [eu, e)
+   //[<) U [unsorted) U [>=)
+   auto pivot = e-1;
+   TIter bu = b;
+   TIter eu = pivot;
+
+   while (bu < eu)
+   {
+      //assert(*max_element(b, bu) <  *pivot);
+      //assert(*min_element(eu, beu) >=  *pivot);
+      if (*bu < *pivot)
+      {
+         //[<) U [u1] U [unsorted) U [>=)
+         ++bu;
+      }
+      else
+      {
+         iter_swap(bu, eu-1);
+         --eu;
+      }
+      //assert(*max_element(b, bu) <  *pivot);
+      //assert(*min_element(eu, beu) >=  *pivot);
+   }
+   iter_swap(pivot, eu);
+   return eu;
+}
+
+template <class TIter>
+TIter partition(TIter b, TIter e, TIter pivot)
+{
+   //[<)[>-)[unpartitioned)
+   //[b, el][el, bu)[bu,e)
+   //[b, bg][bg, eg)[eg, e)
+
+   iter_swap(pivot, e-1);
+   pivot = e;
+   --pivot;
+
+   auto p_value = *pivot;
+   auto bg = b;
+   auto eg = b;
+
+   while (eg < pivot)
+   {
+      //assert(*max_element(b, bg) <  *pivot);
+      //assert(*min_element(bg, eg) >=  *pivot);
+
+      if (*eg < p_value)
+      {
+         iter_swap(bg, eg);
+         bg++;
+      }
+      eg++;
+   }
+   iter_swap(pivot, eg);
+   return eg;
+}
+
+template <class TIter>
+void quick_sort(TIter b, TIter e)
+{
+   if (e - b < 2)
+      return;
+
+   TIter pivot = b;
+   // [b, p) [p, e)
+   pivot = partition_hoar(b, e);
+   //assert(*max_element(b, pivot) <  *pivot);
+   //assert(*min_element(pivot, e) >= *pivot);
+   
+   quick_sort(b, pivot);
+   quick_sort(pivot+1, e);
+
+   assert(is_sorted(b, e));
+}
+
 int main()
 {
-   //int arr[] = { 12, 11, 13, 5, 6, 7 };
-   //const int arr_size = sizeof(arr) / sizeof(arr[0]);
+   int arr[] = { 12, 11, 13, 5, 6, 7 };
+   //int arr[] = { 8, 1, 15, 3, 2 };
+   const int arr_size = sizeof(arr) / sizeof(arr[0]);
    //int buffer[arr_size];
    //merge_sort(arr, arr + arr_size, buffer);
-   //for (int i = 0; i < arr_size; ++i)
-   //   cout << arr[i] << endl;
-   // system("pause");
+   quick_sort(arr, arr + arr_size);
+   for (int i = 0; i < arr_size; ++i)
+      cout << arr[i] << ' ';
+    system("pause");
    return 0;
 }
 
-template <class T>
-class vector
-{
-public:
-   vector(size_t size = 0)
-   : m_size(0)
-   , m_data(nullptr)
-   , m_capacity(0)
-   {
-      m_data = new T[size];
-      m_size = size;
-      m_capacity = size;
-   }
-
-   vector(const vector<T>& that)
-      : m_size(0)
-      , m_data(nullptr)
-      , m_capacity(0)
-   {
-      m_data = new T[other.size()];
-      m_size = other.size();
-      m_capacity = other.capacity();
-      std::copy(other.begin(), other.end(), m_data);
-   }
-
-   ~vector()
-   {
-      delete [] m_data;
-   }
-
-   void swap(vector<T>& other) noexept
-   {
-      std::swap(m_data, other.data);
-      std::swap(m_size, other.m_size);
-      std::swap(m_capacity, other.m_capacity);
-   }
-
-   void reserve(size_t new_size)
-   {
-      if (m_capacity < new_size)
-      {
-         T* tmp = new T[new_size];
-         copy(begin(), end(), tmp);
-         delete[] m_data;
-         m_data = tmp;
-         m_capacity = new_size
-      }
-   }
-
-   //---------------------------
-
-   vector<T>& operator=(const vector<T>& that)  
-   {
-      if(this != &other)
-         this->swap(vector<T>(other));   //copy swap idiom!
-   }
-
-   T& operato[](size_t index)
-   {
-      return m_data[index];
-   }
-
-   const T& operato[](size_t index) const
-   {
-      return m_data[index];
-   }
-  //vector<T>& operator=(vector<T> that)  
-   //{
-   //     this->swap(other);   //copy swap idiom!
-   //}
-
-   T* begin()
-   {
-      return m_data;
-   }
-
-   T* end()
-   {
-      return m_data+m_size;
-   }
-
-   void push_back(const T& x)
-   {
-      assert(m_capacity >= m_size);
-      if (m_capacity ==  m_size)
-      {
-         reserve(m_size*2);
-      }
-      *(end()) = x;
-      ++m_size;
-      assert(m_capacity >= m_size);
-   }
-
-   size_t size() const
-   {
-      return m_size;
-   }
-
-private:
-   T*       m_data;
-   size_t   m_size;
-   size_t   m_capacity;
-};
