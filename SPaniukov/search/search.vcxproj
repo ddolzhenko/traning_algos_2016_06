@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boundUpLowRemoveIf.hpp" />
+    <ClInclude Include="counting_sort.hpp" />
     <ClInclude Include="searchs.hpp" />
     <ClInclude Include="sort.hpp" />
     <ClInclude Include="vector.hpp" />
