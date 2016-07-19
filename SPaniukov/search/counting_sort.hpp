@@ -28,7 +28,7 @@ void counting_sort(vector<T> v)// o(n)
 template <class T>
 uint8_t get_radix(T x, size_t radix)
 {
-	return x >> radix*CHAR_BIT;
+	return x >> radix*CHAR_BIT;// x/pow(radix, CHAR_BIT)
 }
 
 template <class T>
@@ -77,5 +77,52 @@ void radix_sort(vector<T>& v)
 
 		v.swap(buffer);
 	}
+}
+
+
+template <class Titer>
+vector<size_t> compute_frequencies_iter(Titer b, Titer e, size_t radix)
+{
+	vector<size_t> freq(256);
+	for (auto it = b; it != e; ++it)
+	{
+		freq[it-b]++
+	}
+	return freq;
+}
+
+template <class Titer>
+void radix_sort_upsidedown(Titer b, Titer e, int radix, Titer buff)
+{
+	if (e - b < 2 ) return;
+	if (radix < 0) return;
+
+	auto freq = compute_frequencies_iter(b, e, radix);//O(n)
+	auto begins = cumulative_sums(freq);//O(1)
+	auto old_begins = begins;
+
+	for (auto x : v)
+	{
+		auto index = begins[get_radix(x, radix)]++;
+		*(buff+index) = x;
+	}
+
+	for (auto i = 0; i < old_begins.size(); ++i)
+	{
+		auto begin = buff + old_begins[i];
+		auto end = buff + begins[i];
+		vector<typename Titer::value_type> buff2;
+		radix_sort_upsidedown(begin, end, radix - 1; buff2.begin());
+		copy(begin, end, b + old_begins[i]);
+	}
+}
+
+template <class Titer>
+void radix_sort2(Titer b, Titer e)
+{
+	typedef typename Titer::value_type T;
+	vector<T> buffer(e - b);
+	const size_t radix_count = sizeof(T);
+	radix_sort_upsidedown(b, e, radix_count, buffer.begin());
 }
 
