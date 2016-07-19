@@ -1,0 +1,19 @@
+﻿Сборка начата 6/23/2016 1:17:15 PM.
+     1>Проект "E:\Git\Algorithms\SPaniukov\search\search.vcxproj" в узле 2 (целевые объекты Rebuild).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt searchs.cpp Source.cpp unit_tests.hpp
+         unit_tests.hpp
+         Source.cpp
+         searchs.cpp
+         Создание кода...
+     1>e:\git\algorithms\spaniukov\search\searchs.cpp(86): warning C4715: binarySearchImperative: значение возвращается не при всех путях выполнения
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Git\Algorithms\SPaniukov\search\Debug\search.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"E:\Git\Algorithms\SPaniukov\search\Debug\search.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Git\Algorithms\SPaniukov\search\Debug\search.lib" /MACHINE:X86 Debug\searchs.obj
+         Debug\Source.obj
+         Debug\unit_tests.obj
+         search.vcxproj -> E:\Git\Algorithms\SPaniukov\search\Debug\search.exe
+     1>Сборка проекта "E:\Git\Algorithms\SPaniukov\search\search.vcxproj" завершена (целевые объекты Rebuild).
+
+Сборка успешно завершена.
+
+Затраченное время: 00:00:02.09

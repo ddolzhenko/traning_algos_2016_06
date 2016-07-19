@@ -1,10 +1,4 @@
-#include <iostream>
-#include <cassert>
-#include <string>
-#include <iomanip>
-#include <vector>
-
-using namespace std;
+#include "radix_sort.h"
 
 
 int search(int A[], int size, int elem);
