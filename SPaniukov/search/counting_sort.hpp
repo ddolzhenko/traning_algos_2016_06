@@ -1,3 +1,6 @@
+#ifndef COUNTING_SORT_HPP
+#define COUNTING_SORT_HPP
+
 #include <vector>
 #include <climits>
 
@@ -126,3 +129,4 @@ void radix_sort2(Titer b, Titer e)
 	radix_sort_upsidedown(b, e, radix_count, buffer.begin());
 }
 
+#endif
