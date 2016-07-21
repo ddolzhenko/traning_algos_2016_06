@@ -41,5 +41,8 @@
     <ClInclude Include="counting_sort.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="binary_tree.hpp">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
