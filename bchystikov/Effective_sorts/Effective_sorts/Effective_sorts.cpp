@@ -287,7 +287,7 @@ vector<size_t> compute_frequencies(Titer b, Titer e)
 template <class TIter>
 void radix_sort_upsidedown(TIter b, TIter e, int radix, TIter buff)
 {
-   if (e - b < 2 || radix <0)
+   if (e - b < 2 || radix < 0)
       return;
 
    auto freq = compute_frequencies(b, e);
@@ -317,6 +317,7 @@ void radix_sort2(TIter b, TIter e)
    vector<T> buffer(e-b);
    radix_sort_upsidedown(b, e, radix_count, buffer.begin());
 }
+
 
 
 int main()
