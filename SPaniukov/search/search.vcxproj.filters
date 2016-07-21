@@ -41,10 +41,14 @@
     <ClInclude Include="counting_sort.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+<<<<<<< 877dffbcf9b681bde7f6f381697053cc3e1252c0
     <ClInclude Include="float_radix_sort.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="int_radix_sort.hpp">
+=======
+    <ClInclude Include="binary_tree.hpp">
+>>>>>>> binary tree
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
