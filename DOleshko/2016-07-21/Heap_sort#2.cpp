@@ -27,3 +27,32 @@ void build_max_heap_1(TIter b, TIter e)
     }
 }
 
+template <class TIter>
+void build_max_heap_2(heap) // TODO
+{
+    // [UNPROCESSED) U [HEAP)
+    //TIter bh = e; //begin of HEAP
+
+    heap_length = heap.size();
+    inr i = heap_length / 2;  // half of ARRAY => leaves
+    while(i > = 0)
+    {
+        heapify_down(heap, heap_length, i);
+    }
+}
+
+template <class TIter>
+void heap_sort(TIter b, TIter e) // O(n log n), but NOT CACHE FRIENDLY to much memory jumps
+{
+    build_max_heap(b, e);
+    auto eh = e;
+
+    //[b .. HEAP .. eh) U [SORTED)
+
+    while(b < eh)
+    {
+        --eh;
+        iter_swap(b, eh);
+        heapify_down(b, eh, b);
+    }
+}
