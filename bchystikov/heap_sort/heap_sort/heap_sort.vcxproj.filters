@@ -15,19 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="search.cpp">
-      <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h">
-      <Filter>Файлы ресурсов</Filter>
+    <ClInclude Include="stdafx.h">
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="radix_sort.h">
-      <Filter>Файлы ресурсов</Filter>
+    <ClInclude Include="targetver.h">
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="my_radix_sort.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="heap_sort.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
