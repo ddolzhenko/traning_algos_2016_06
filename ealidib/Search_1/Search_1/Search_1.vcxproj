@@ -149,9 +149,11 @@
     <ClCompile Include="search.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="heap_sort.h" />
     <ClInclude Include="my_radix_sort.h" />
     <ClInclude Include="radix_sort.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="sorted_vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
