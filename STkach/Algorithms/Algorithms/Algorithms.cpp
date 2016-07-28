@@ -14,6 +14,7 @@ int main()
 
 	int a[] = {2, 2, 3, 3, 3, 4, 5};
 
+
 	int *n = remove_even(a, a + 7);
 
 	cout << *n << "\n";
