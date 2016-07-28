@@ -132,7 +132,6 @@ private:
 
 private:
 	data_impl m_data;
-
 };
 
 #endif
