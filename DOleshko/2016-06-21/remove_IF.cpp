@@ -16,7 +16,7 @@ bool even(TValue V)
     return (V % 2 == 0);
 }
 
-template <class TIter, class F>
+template <class TIter, typename F>
 TIter remove_IF(TIter b, TIter e, F f)
 {
     // b < e
@@ -54,7 +54,9 @@ int main()
 {
     std::vector<int> v({0, 1, 12, 40, 33, 56, 23, 0});
 
-    auto itIF = remove_IF(v.begin(), v.end(), even<int>);
+   // auto itIF = remove_IF(v.begin(), v.end(), even<int>);
+
+    auto itIF = remove_IF(v.begin(), v.end(), [] (auto val) { return (val % 2 == 0); } );
 
     for (auto i: v)
     {
