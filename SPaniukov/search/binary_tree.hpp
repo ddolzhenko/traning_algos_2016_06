@@ -129,7 +129,6 @@ template <class TIter>
 void heap_sort(TIter b, TIter e)
 {
 	buld_max_heap_v2(b, e);
-
 	// [sorted) [heap)
 	// [b, eh][eh, e)
 	auto eh = e;
