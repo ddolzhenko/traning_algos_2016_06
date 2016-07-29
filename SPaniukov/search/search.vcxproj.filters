@@ -41,22 +41,34 @@
     <ClInclude Include="counting_sort.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+<<<<<<< HEAD
 <<<<<<< 9eee073452b06fd641955d0c7fcc81568a1a0d1f
 <<<<<<< 877dffbcf9b681bde7f6f381697053cc3e1252c0
 =======
 <<<<<<< HEAD
 >>>>>>> radix
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 08909556ec3834ee2cc612dd1572290e2ab49ec3
     <ClInclude Include="float_radix_sort.hpp">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="int_radix_sort.hpp">
 =======
     <ClInclude Include="binary_tree.hpp">
+<<<<<<< HEAD
 <<<<<<< 9eee073452b06fd641955d0c7fcc81568a1a0d1f
 >>>>>>> binary tree
 =======
 >>>>>>> 21ecca40e70cf60cb34603ff8332e0ed5c3e7896
 >>>>>>> radix
+=======
+>>>>>>> 21ecca40e70cf60cb34603ff8332e0ed5c3e7896
+=======
+    <ClInclude Include="binary_tree.hpp">
+>>>>>>> 21ecca40e70cf60cb34603ff8332e0ed5c3e7896
+>>>>>>> 08909556ec3834ee2cc612dd1572290e2ab49ec3
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
