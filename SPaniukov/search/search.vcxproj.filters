@@ -1,75 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Файлы исходного кода">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Заголовочные файлы">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Файлы ресурсов">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="searchs.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="unit_tests.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="searchs.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="unit_tests.hpp">
-      <Filter>Заголовочные файлы</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="searchs.hpp">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="boundUpLowRemoveIf.hpp">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="sort.hpp">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="vector.hpp">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="counting_sort.hpp">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-<<<<<<< 9eee073452b06fd641955d0c7fcc81568a1a0d1f
-<<<<<<< 877dffbcf9b681bde7f6f381697053cc3e1252c0
-=======
-<<<<<<< HEAD
->>>>>>> radix
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 08909556ec3834ee2cc612dd1572290e2ab49ec3
-    <ClInclude Include="float_radix_sort.hpp">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="int_radix_sort.hpp">
-=======
-    <ClInclude Include="binary_tree.hpp">
-<<<<<<< HEAD
-<<<<<<< 9eee073452b06fd641955d0c7fcc81568a1a0d1f
->>>>>>> binary tree
-=======
->>>>>>> 21ecca40e70cf60cb34603ff8332e0ed5c3e7896
->>>>>>> radix
-=======
->>>>>>> 21ecca40e70cf60cb34603ff8332e0ed5c3e7896
-=======
-    <ClInclude Include="binary_tree.hpp">
->>>>>>> 21ecca40e70cf60cb34603ff8332e0ed5c3e7896
->>>>>>> 08909556ec3834ee2cc612dd1572290e2ab49ec3
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
+    <ClInclude Include="binary_tree.hpp" />
+    <ClInclude Include="boundUpLowRemoveIf.hpp" />
+    <ClInclude Include="counting_sort.hpp" />
+    <ClInclude Include="float_radix_sort.hpp" />
+    <ClInclude Include="int_radix_sort.hpp" />
+    <ClInclude Include="searchs.hpp" />
+    <ClInclude Include="sort.hpp" />
+    <ClInclude Include="vector.hpp" />
+    <ClInclude Include="sortedVector.hpp" />
   </ItemGroup>
 </Project>

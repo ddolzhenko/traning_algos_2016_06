@@ -130,6 +130,7 @@
     <ClInclude Include="int_radix_sort.hpp" />
     <ClInclude Include="searchs.hpp" />
     <ClInclude Include="sort.hpp" />
+    <ClInclude Include="sortedVector.hpp" />
     <ClInclude Include="vector.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

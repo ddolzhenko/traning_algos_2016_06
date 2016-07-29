@@ -83,7 +83,9 @@ int binarySearchImperative(int arr[], int size, int key)
 			return middle;
 		}
 	}
+	return 0;
 }
+
 
 int searchMinElement(int arr[], int size)
 {
