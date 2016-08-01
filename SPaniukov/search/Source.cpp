@@ -43,7 +43,7 @@ int main()
 	sortVector.add(-43);
 	CSortedVector<int> sortVector1 = sortVector;
 	
-	cout << "Sort vector :" << endl;
+	cout << "Sorted vector :" << endl;
 	cout << "{ ";
 	for (size_t index = 0; index < sortVector1.size(); index++)
 	{
