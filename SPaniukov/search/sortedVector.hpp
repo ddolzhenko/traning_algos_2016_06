@@ -227,7 +227,7 @@ typename CSortedVector<T>::const_iterator CSortedVector<T>::add(const_reference 
 
 	while (begin() < pivot)
 	{
-		assert(is_sorted(begin(), pivot) && is_sorted(pivot, end()));
+		//assert(std::is_sorted(begin(), pivot) && std::is_sorted(pivot, end()));
 		auto prev = pivot - 1;
 		if (*prev > *pivot)
 		{
@@ -238,7 +238,7 @@ typename CSortedVector<T>::const_iterator CSortedVector<T>::add(const_reference 
 			break;
 		}
 		pivot--;
-		assert(is_sorted(begin(), pivot) && is_sorted(pivot, end()));
+		//assert(std::is_sorted(begin(), pivot) && std::is_sorted(pivot, end()));
 	}
 
 	assert(validate_invariant());
@@ -269,7 +269,7 @@ typename CSortedVector<T>::const_iterator CSortedVector<T>::erase(const_iterator
 template <class T>
 bool CSortedVector<T>::validate_invariant() const
 {
-	return is_sorted(m_data.begin(), m_data.end());
+	return std::is_sorted(m_data.begin(), m_data.end());
 }
 
 #endif

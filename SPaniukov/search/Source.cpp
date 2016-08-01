@@ -38,9 +38,10 @@ void testRemoveEvenGeneral()
 
 int main()
 {
-	int arr[] = { 0, 3, 7, 6, 12, 7, 9, 4 };
+	int arr[] = { 0, -3, 7, 6, -12, 7, 9, 4 };
 	CSortedVector<int> sortVector = CSortedVector<int>(arr, arr + 8);
 	CSortedVector<int> sortVector1 = sortVector;
+	sortVector.add(-43);
 	cout << "Sort vector :" << endl;
 	cout << "{ ";
 	for (size_t index = 0; index < sortVector1.size(); index++)

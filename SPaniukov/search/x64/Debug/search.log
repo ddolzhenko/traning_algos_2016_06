@@ -1,6 +1,18 @@
 ﻿  unit_tests.hpp
   Source.cpp
+e:\git\algorithms\spaniukov\search\sortedvector.hpp(242): error C2672: 'std::is_sorted': no matching overloaded function found
+  e:\git\algorithms\spaniukov\search\sortedvector.hpp(224): note: while compiling class template member function 'std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<int>>> CSortedVector<int>::add(const int &)'
+  e:\git\algorithms\spaniukov\search\source.cpp(44): note: see reference to function template instantiation 'std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<int>>> CSortedVector<int>::add(const int &)' being compiled
+  e:\git\algorithms\spaniukov\search\source.cpp(42): note: see reference to class template instantiation 'CSortedVector<int>' being compiled
+e:\git\algorithms\spaniukov\search\sortedvector.hpp(242): error C2782: 'bool std::is_sorted(_FwdIt,_FwdIt)': template parameter '_FwdIt' is ambiguous
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\algorithm(3871): note: see declaration of 'std::is_sorted'
+  e:\git\algorithms\spaniukov\search\sortedvector.hpp(242): note: could be 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>'
+  e:\git\algorithms\spaniukov\search\sortedvector.hpp(242): note: or       'std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<int>>>'
+e:\git\algorithms\spaniukov\search\sortedvector.hpp(242): error C2784: 'bool std::is_sorted(_FwdIt,_FwdIt)': could not deduce template argument for '_FwdIt' from 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<int>>>'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\algorithm(3871): note: see declaration of 'std::is_sorted'
+e:\git\algorithms\spaniukov\search\sortedvector.hpp(242): error C2780: 'bool std::is_sorted(_FwdIt,_FwdIt,_Pr)': expects 3 arguments - 2 provided
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\algorithm(3857): note: see declaration of 'std::is_sorted'
+e:\git\algorithms\spaniukov\search\sortedvector.hpp(242): error C2784: 'bool std::is_sorted(_FwdIt,_FwdIt)': could not deduce template argument for '_FwdIt' from 'std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<int>>>'
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\algorithm(3871): note: see declaration of 'std::is_sorted'
   searchs.cpp
   Generating Code...
-  search.vcxproj -> E:\Git\Algorithms\SPaniukov\search\x64\Debug\search.exe
-  search.vcxproj -> E:\Git\Algorithms\SPaniukov\search\x64\Debug\search.pdb (Full PDB)
