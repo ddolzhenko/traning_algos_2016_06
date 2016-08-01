@@ -40,14 +40,15 @@ int main()
 	CSortedVector<int> sortVector = CSortedVector<int>(arr, arr + 8);
 	sortVector.add(-43);
 	CSortedVector<int> sortVector1 = sortVector;
-	
+	size_t vec_size = sortVector1.size();
 	cout << "Sorted vector :" << endl;
 	cout << "{ ";
-	for (size_t index = 0; index < sortVector1.size(); index++)
+	for (size_t index = 0; index < vec_size; index++)
 	{
-		cout << sortVector1[index] << ", ";
+		cout << sortVector1[index];
+		if (index != vec_size - 1) cout << ", ";
 	}
-	cout << "}" << endl;
+	cout << " }" << endl;
 
    char ch;
    cin >> ch;
