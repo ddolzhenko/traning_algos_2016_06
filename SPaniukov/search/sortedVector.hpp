@@ -23,13 +23,13 @@ public:
 	
 	explicit CSortedVector(const vector<T>& vec);
 
-	CSortedVector(const CSortedVector<T>&);
+	CSortedVector(CSortedVector<T>&);
 	CSortedVector(const CSortedVector<T>&&);
 
 	CSortedVector& operator= (const CSortedVector<T>&);
 	CSortedVector& operator= (const CSortedVector<T>&&);
 	T& operator[] (const size_type index);
-	T& getData();
+	vector<T>& getData();
 	void swap(CSortedVector<T>& rhs);
 
 	~CSortedVector();
@@ -98,27 +98,27 @@ CSortedVector<T>::CSortedVector(const vector<T>& vec)
 }
 
 template <class T>
-CSortedVector<T>::CSortedVector(const CSortedVector<T>& vec)
-	: m_data(vec)
+CSortedVector<T>::CSortedVector(CSortedVector<T>& vec)
 {
+	m_data = vec.getData();
 }
 
 template <class T>
 CSortedVector<T>::CSortedVector(const CSortedVector<T>&& vec)
-	: m_data(vec)
 {
+	m_data = vec.getData();
 }
 
 template <class T>
 CSortedVector<T>& CSortedVector<T>::operator= (const CSortedVector<T>& vec)
 {
-	this->m_data = vec.m_data;
+	m_data = vec.getData();
 }
 
 template <class T>
 CSortedVector<T>& CSortedVector<T>::operator= (const CSortedVector<T>&&)
 {
-	m_data = vec.m_data;
+	m_data = vec.getData();
 }
 
 template <class T>
@@ -128,7 +128,7 @@ T& CSortedVector<T>::operator[] (const size_type index)
 }
 
 template <class T>
-T& CSortedVector<T>::getData()
+vector<T>& CSortedVector<T>::getData()
 {
 	return m_data;
 }
