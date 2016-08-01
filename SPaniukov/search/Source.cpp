@@ -1,10 +1,11 @@
 #include "searchs.hpp"
-#include "boundUpLowRemoveIf.hpp"
-#include "unit_tests.hpp"
+
 #include "sortedVector.hpp"
 #include <vector>
+#include <iostream>
 
-
+using namespace std;
+/*
 void testSearch()
 {
    cout << "******Test started*******" << endl;
@@ -33,16 +34,16 @@ void testRemoveEvenGeneral()
    testRemoveIf(Vec({ 0, 2, 4, 6, 12, 2, 2, 1 }), Vec({ 1 }), isEven<std::vector<int>::iterator>);
    cout << "******Test finished*******" << endl;
 }
+*/
 
 int main()
 {
 	int arr[] = { 0, 3, 7, 6, 12, 7, 9, 4 };
-	std::vector<int> vec(&arr[0], &arr[7]);
-	CSortedVector<int, int*> sortVector (vec);
+	CSortedVector<int> sortVector = CSortedVector<int>(arr, arr + 8);
 
 	cout << "Sort vector :" << endl;
 	cout << "{ ";
-	for (size_t index = 0; index < vec.size(); index++)
+	for (size_t index = 0; index < sortVector.size(); index++)
 	{
 		cout << sortVector[index] << ", ";
 	}
