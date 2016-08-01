@@ -1,6 +1,8 @@
 #include "searchs.hpp"
 #include "boundUpLowRemoveIf.hpp"
 #include "unit_tests.hpp"
+#include "sortedVector.hpp"
+#include <vector>
 
 
 void testSearch()
@@ -34,7 +36,17 @@ void testRemoveEvenGeneral()
 
 int main()
 {
-   testRemoveEvenGeneral();
+	int arr[] = { 0, 3, 7, 6, 12, 7, 9, 4 };
+	std::vector<int> vec(&arr[0], &arr[7]);
+	CSortedVector<int, int*> sortVector (vec);
+
+	cout << "Sort vector :" << endl;
+	cout << "{ ";
+	for (size_t index = 0; index < vec.size(); index++)
+	{
+		cout << sortVector[index] << ", ";
+	}
+	cout << "}" << endl;
 
    char ch;
    cin >> ch;

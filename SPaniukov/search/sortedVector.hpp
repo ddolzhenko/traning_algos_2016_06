@@ -5,7 +5,7 @@
 
 using namespace std;
 
-template <class T>
+template <class T, class TIter>
 class CSortedVector
 {
 public:
@@ -15,9 +15,8 @@ public:
 	typedef typename data_impl::const_reference const_reference;
 	typedef typename data_impl::const_iterator const_iterator;
 
-	CSortedVector() = default {}
+	CSortedVector() = default {};
 	
-	template<class TIter>
 	CSortedVector(TIter first, TIter last) 
 		: m_data(first, last)
 	{
@@ -25,11 +24,22 @@ public:
 		assert(validate_invariant());
 	}
 
-	CSortedVector(const CSortedVector<T>&) = default {}
-	CSortedVector(const CSortedVector<T>&&) = default {}
+	explicit CSortedVector(vector<T> vec)
+		: m_data(vec)
+	{
+		sort(m_data.begin(), m_data.end());
+		assert(validate_invariant());
+	}
+
+	CSortedVector(const CSortedVector<T>&) = default {};
+	CSortedVector(const CSortedVector<T>&&) = default {};
 
 	CSortedVector& operator= (const CSortedVector<T>&) = default;
 	CSortedVector& operator= (const CSortedVector<T>&&) = default;
+	T& operator[] (const size_type index)
+	{
+		return m_data[size_type];
+	}
 
 	void swap(CSortedVector<T>& rhs)
 	{
@@ -37,7 +47,7 @@ public:
 		assert(validate_invariant());
 	}
 
-	~CSortedVector() = default {}
+	~CSortedVector() = default {};
 
 public: //global modifiers
 
@@ -52,7 +62,7 @@ public: //global modifiers
 	}
 
 public: //state
-	size_type size() const { m_data.size()}
+	size_type size() const { m_data.size(); }
 	bool empty() const { m_data.empty(); }
 
 public://iterators
