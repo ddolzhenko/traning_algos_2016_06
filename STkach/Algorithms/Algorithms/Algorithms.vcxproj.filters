@@ -44,5 +44,8 @@
     <ClCompile Include="SortedVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="My_List.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
