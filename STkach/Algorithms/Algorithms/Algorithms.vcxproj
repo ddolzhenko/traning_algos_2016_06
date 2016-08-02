@@ -152,6 +152,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
+    <ClCompile Include="Data_structure.cpp" />
+    <ClCompile Include="SortedVector.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
