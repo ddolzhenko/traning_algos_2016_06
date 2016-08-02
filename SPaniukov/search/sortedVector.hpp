@@ -211,7 +211,7 @@ template <class T>
 typename CSortedVector<T>::const_iterator CSortedVector<T>::find(const_reference x) const
 {
 	auto lb = lower_bound(begin(), end(), x);
-	if (lb != ned() && !(*lb > x))
+	if (lb != end() && !(*lb > x))
 	{
 		return lb;
 	}
