@@ -38,5 +38,11 @@
     <ClCompile Include="Algorithms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Data_structure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SortedVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
