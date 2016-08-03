@@ -1,6 +1,8 @@
-#include "sortedVector.hpp"
 #include <vector>
 #include <iostream>
+
+#include "sortedVector.hpp"
+#include "CList.hpp"
 
 using namespace std;
 /*
@@ -36,21 +38,14 @@ void testRemoveEvenGeneral()
 
 int main()
 {
-	int arr[] = { 0, -3, 7, 6, -12, 7, 9, 4 };
-	CSortedVector<int> sortVector = CSortedVector<int>(arr, arr + 8);
-	sortVector.add(-43);
-	CSortedVector<int> sortVector1 = sortVector;
-	size_t vec_size = sortVector1.size();
-	cout << "Sorted vector :" << endl;
-	cout << "{ ";
-	for (size_t index = 0; index < vec_size; index++)
-	{
-		cout << sortVector1[index];
-		if (index != vec_size - 1) cout << ", ";
-	}
-	cout << " }" << endl;
+	DLL::CList<int> list1 = DLL::CList<int>();
+	DLL::ListIterator<int> begin = list1.begin();
+	DLL::ListIterator<int> end = list1.end();
 
-   char ch;
+	if (begin == end) cout << "welcome to the club" << endl;
+
+
+	char ch;
    cin >> ch;
    
 	return 0;

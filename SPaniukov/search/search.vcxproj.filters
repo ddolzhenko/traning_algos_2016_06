@@ -15,5 +15,6 @@
     <ClInclude Include="sort.hpp" />
     <ClInclude Include="vector.hpp" />
     <ClInclude Include="sortedVector.hpp" />
+    <ClInclude Include="CList.hpp" />
   </ItemGroup>
 </Project>

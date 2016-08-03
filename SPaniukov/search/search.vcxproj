@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClInclude Include="binary_tree.hpp" />
     <ClInclude Include="boundUpLowRemoveIf.hpp" />
+    <ClInclude Include="CList.hpp" />
     <ClInclude Include="counting_sort.hpp" />
     <ClInclude Include="float_radix_sort.hpp" />
     <ClInclude Include="int_radix_sort.hpp" />
