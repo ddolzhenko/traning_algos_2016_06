@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "cassert"
 
 namespace SLL  //single linked list
 {
@@ -30,7 +31,9 @@ namespace DLL  //double linked list
          , next(next_)
       {
       }
-
+#ifndef NDEBUG
+      virtual void dummy() {};
+#endif
       Node* next;
       Node* prev;
    };
