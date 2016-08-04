@@ -17,10 +17,26 @@ class Tree:
         return str(self.data)
 
 
-def traverse(tree, visitor):
-    
-    pass
+def traverse_1(tree, visitor): #UP->DOWN && LEFT->RIGHT === PRE_ORDER
+    if tree == None:
+        return;
+    visitor(tree.data)
+    traverse_1(tree.left, visitor)
+    traverse_1(tree.right, visitor)
 
+def traverse_2(tree, visitor): #LEFT->RIGHT && DOWN->UP === IN_ORDER
+    if tree == None:
+        return;
+    traverse_2(tree.left, visitor)
+    visitor(tree.data)
+    traverse_2(tree.right, visitor)
+
+def traverse_3(tree, visitor): #ALL CHILDREN FIRST === POST_ORDER
+    if tree == None:
+        return;
+    traverse_3(tree.left, visitor)
+    traverse_3(tree.right, visitor)
+    visitor(tree.data)
 
 def create_tree():
     t = Tree(8,
@@ -51,7 +67,9 @@ def main():
     del Tree.foo
     #t.foo(10) - error
 
-    traverce(t, visitor)
+    #traverse_1(t, print)
+    #traverse_2(t, print)
+    traverse_3(t, print)
 
 if __name__ == '__main__':
     main()
