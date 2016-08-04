@@ -34,12 +34,12 @@ namespace DLL
 	};
 
 	template <class T>
-	struct DataNode : bublic Node
-		T data;
+	struct DataNode : bublic Node	
 	{
 		DataNode(const T& data_)
 			: Node()
 			, data(data_) {}
+		T data;
 
 	};
 

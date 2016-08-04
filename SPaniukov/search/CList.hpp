@@ -26,7 +26,7 @@ namespace DLL
 {
 	struct Node
 	{
-		Node(Node* prev_ = nullptr, Node* next_ = nullptr)
+		Node(Node* next_ = nullptr, Node* prev_ = nullptr)
 			: next(next_)
 			, prev(prev_)
 		{}
@@ -45,15 +45,24 @@ namespace DLL
 		T data;
 	};
 
-	Node* insert_before(Node* who, Node* what)
+	Node* insert_before(Node* where, Node* what)
 	{
-		assert(who != nullptr && who->prev != nullptr);
+		//assert(where != nullptr && where->prev != nullptr);
 
-		what->prev = who->prev;
-		what->next = who;
-		who->prev->next = what;
-		who->next = what;
-		
+		if (where->next == nullptr && where->prev == nullptr)
+		{
+			what->next = where;
+			what->prev = where;
+			where->prev = what;
+			where->next = what;
+		}
+		else
+		{
+			what->next = where;
+			what->prev = where->prev;
+			where->prev->next = what;
+			where->prev = what;
+		}
 		return what;
 	}
 
@@ -70,7 +79,7 @@ namespace DLL
 	}
 
 	template <class T>
-	struct ListIterator : public std::iterator
+	struct ListIterator
 	{
 	public: // types
 
@@ -80,7 +89,7 @@ namespace DLL
 		typedef const T&            const_reference;
 		typedef T*                  pointer;
 		typedef const T*            const_pointer;
-		typedef std::iterator<T>    difference_iterator;
+		//typedef std::iterator<T>    difference_iterator;
 
 	public:
 
@@ -88,33 +97,38 @@ namespace DLL
 			: m_node(nullptr)
 		{}
 
-		ListIterator(const ListIterator&) = default;
-		ListIterator(ListIterator&) = default;
-		ListIterator(ListIterator&&) = default;
+		ListIterator(const ListIterator<T>&) = default;
+		ListIterator(ListIterator<T>&&) = default;
 		
-		ListIterator& operator=(const ListIterator&) = default;
-		ListIterator& operator=(ListIterator&) = default;
-		ListIterator& operator=(ListIterator&&) = default;
+		ListIterator& operator=(const ListIterator<T>&) = default;
+		ListIterator& operator=(ListIterator<T>&&) = default;
+		
 		~ListIterator() = default;
 
 	public:
 
-		ListIterator& operator++()
+		ListIterator<T>& operator++()
 		{
 			m_node = m_node->next;
 			return *this;
 		}
 
-		ListIterator& operator++(int)
+		ListIterator<T>& operator++(int)
 		{
-			ListIterator result = *this;
+			ListIterator<T> result = *this;
 			m_node = m_node->next;
 			return result;
 		}
 
-		ListIterator& operator--(int)
+		ListIterator<T>& operator--()
 		{
-			ListIterator result = *this;
+			m_node = m_node->prev;
+			return *this;
+		}
+
+		ListIterator<T>& operator--(int)
+		{
+			ListIterator<T> result = *this;
 			m_node = m_node->prev;
 			return result;
 		}
@@ -123,21 +137,29 @@ namespace DLL
 
 		reference operator*()
 		{
-			asseret(dynamic_cast<DataNode<T>>(m_node) != nullptr);
-			return static_cast<DataNode<T>>(m_node)->data;
+			//assert(dynamic_cast<DataNode<T>*>(m_node) != nullptr);
+			return static_cast<DataNode<T>*>(m_node)->data;
 		}
 
 		pointer operator->()
 		{
 			return &(this->operator*());
 		}
-
+		
+		const Node* getNode() const
+		{
+			return m_node;
+		}
+	
 	private:
 
-		friend class CList<T>;
+		template <class T>
+		friend class CList;
+
 		ListIterator(Node* node)
 			: m_node(node)
 		{}
+		
 		bool is_valid() const
 		{
 			return m_node == nullptr;
@@ -145,6 +167,18 @@ namespace DLL
 
 		Node* m_node;
 	};
+
+	template<class T>
+	bool operator!=(const ListIterator<T>& lhs, const ListIterator<T>& rhs)
+	{
+		return !(lhs.getNode() == rhs.getNode());
+	}
+
+	template<class T>
+	bool operator==(const ListIterator<T>& lhs, const ListIterator<T>& rhs)
+	{
+		return lhs.getNode() == rhs.getNode();
+	}
 
 	template <class T>
 	class CList
@@ -161,38 +195,57 @@ namespace DLL
 	public: //ctors
 
 		CList()
-			: m_dummy(&m_dummy, &m_dummy)
+			: m_dummy()
 			, m_size(0)
 		{}
 
 		template <class TIter>
 		CList(TIter begin, TIter end)
+			: CList()
 		{
-
+			for (auto it = begin; it != end; it++)
+			{
+				push_back(*it);
+			}
 		}
 
-		CList(const CList<T>& rhs)
+		CList(CList<T>& rhs)
+			: CList()
+		{
+			for (auto it = rhs.begin(); it != rhs.end(); it++)
+			{
+				push_back(*it);
+			}
+		}
+
+		CList(const CList<T>&& rhs) 
 			: CList()
 		{
 			for (const auto& x : rhs)
 			{
-				this->push_back(x);
+				push_back(x);
 			}
 		}
 
-		CList(const CList&& rhs) = default;
-
-		CList<T>& operator=(const CList<T>& rhs)
+		CList<T>& operator=(CList<T>& rhs)
 		{
 			if (this != &rhs)
 			{
-				CList < T tmp(rhs); 
+				CList<T> tmp = CList<T>(rhs);
 				this->swap(tmp);
 			}
 			return *this;
 		}
 
-		CList<T>& operator=(const CList<T>&& rhs) = default;
+		CList<T>& operator=(const CList<T>&& rhs) 
+		{
+			if (this != &rhs)
+			{
+				CList<T> tmp(rhs);
+				this->swap(tmp);
+			}
+			return *this;
+		}
 
 		~CList() 
 		{
@@ -204,17 +257,24 @@ namespace DLL
 		
 		void swap(CList<T>& other)
 		{
-			std::swap(m_dummy, other.m_dummy);
-			std::swap(m_size, other.m_size);
+			//std::swap(m_dummy, other.getDummy());
+			//std::swap(m_size, other.getSize());
+			Node tmp_dummy = other.getDummy();
+			size_type tmp_size = other.getSize();
+			other.setDummy(this->getDummy());
+			other.setSize(this->getSize());
+			this->setDummy(tmp_dummy);
+			this->setSize(tmp_size);
 		}
 
 		template <class TIter>
 		CList<T>& assign(TIter begin, TIter end)
 		{
-			CList tmp(begin, end);
+			CList<T> tmp(begin, end);
 			swap(tmp);
 			return *this;
 		}
+
 	public: //state
 		size_type size() const    { return m_size; }
 		bool empty() const        { return size()== 0; }
@@ -237,11 +297,7 @@ namespace DLL
 
 		void push_back(const_reference x)
 		{
-			assert(validate_invariant());
-
 			insert(end(), x);
-
-			assert(validate_invariant());
 		}
 		
 		iterator insert(iterator where, const_reference x)
@@ -250,9 +306,8 @@ namespace DLL
 
 			auto result = DLL::insert_before(where.m_node, new DataNode<T>(x));
 			++m_size;
-			return result;
-
 			assert(validate_invariant());
+			return iterator(result);
 		}
 
 		iterator erase(iterator where)
@@ -262,45 +317,98 @@ namespace DLL
 			auto result = iterator(DLL::cut(where.m_node));
 
 			assert(where.m_node != &m_dummy);
-
-			delete static_cast<DataNode<T>>(where.m_node);
+			
+			delete static_cast<DataNode<T>*>(where.m_node);
+			--m_size;
 
 			assert(validate_invariant());
 			return result;
 		}
+
+		iterator pop_back()
+		{
+			auto it = end();
+			return erase(--it);
+		}
+
+		void splice(iterator where, CList<T>& list)
+		{
+			auto my_it = where;
+			for (auto it = list.begin(); it != list.end(); it++)
+			{
+				insert(my_it, *it);
+			}
+		}
+
+		void reverse()
+		{
+			CList<T> tmp = CList<T>();
+			for (auto it = --end(); it != end(); it--)
+			{
+				tmp.push_back(*it);
+			}
+			swap(tmp);
+		}
+
+		Node& getDummy()
+		{
+			return m_dummy;
+		}
+
+		void setDummy(Node& dummy)
+		{
+			m_dummy = dummy;
+		}
+
+		size_type& getSize()
+		{
+			return m_size;
+		}
+
+		void setSize(size_type& size)
+		{
+			m_size = size;
+		}
 		
 	private:
 		
-		bool validate_size() const
+		bool validate_size() 
 		{
-			size_type size = 0;
-			for (auto it = begin(); it != end(); ++it)
+			if (m_dummy.next != m_dummy.prev)
 			{
-				size++;
+				size_type size = 0;
+				for (auto it = begin(); it != end(); ++it)
+				{
+					size++;
+				}
+				return size == m_size;
 			}
-			return size == m_size;
+			return true;
 		}
 		
-		bool validate_pointers() const
+		bool validate_pointers() 
 		{
-			auto ptr = &m_dummy;
-			while (ptr->next != m_dummy)
+			if (m_dummy.next != m_dummy.prev)
 			{
-				if (ptr->next->prev != ptr)
-					return false;
-				ptr = ptr->next;
+				auto ptr = &m_dummy;
+				while (ptr->next != &m_dummy)
+				{
+					if (ptr->next->prev != ptr)
+						return false;
+					ptr = ptr->next;
+				}
 			}
 			return true;
 		}
 
-		bool validate_invariant() const
+		bool validate_invariant() 
 		{
-			return validate_size() &&	validate_pointers();
+			return validate_size() && validate_pointers();
 		}
 		
 		Node       m_dummy;
 		size_type  m_size;
-
 	};
 }
+
 #endif
