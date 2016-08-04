@@ -8,7 +8,6 @@ class Tree:
     def __str__(self):
         return str(self.data)
 
-
 def create_tree():
     t = Tree(8, 
             Tree(3,
@@ -53,9 +52,26 @@ def remove_if(seq, pred):
         if not pred(x):
             yield x
 
-def list_ter(node):
+def list_iter(node):
     if node:
         yield node.next
+
+def height(tree):   #HW
+    pass
+
+
+
+def bfs(tree):  #breadth-first search
+    que = list()
+
+    que.push(tree)
+    while not que.empty():
+        node = que.pop()
+        if node:
+            yield node
+            que.push(node.left)
+            que.push(node.right)
+
 
 def main():
     t = create_tree()
@@ -66,15 +82,21 @@ def main():
     
     print(", ".join(map(str, dfs_nodes(t))))
     it = dfs_nodes(t)
-    for x in range(4):
-        print(next(it))
+    
+    [x.data*x.data for x in dfs_nodes(t)]
 
-    for x in remove_if(range(1, 100), lambda x: x%3 != 0):
-        print(x)
+    #for x in range(4):
+    #    print(next(it))
 
-    print(", ".join(map(str, remove_if( range(1, 100), lambda x: x%3 != 0))))
+    #for x in remove_if(range(1, 100), lambda x: x%3 != 0):
+    #    print(x)
 
-    print(", ".join(map(str, remove_if( dfs_nodes(t), lambda x: x.data%3 != 0))))
+    #print(", ".join(map(str, remove_if( range(1, 100), lambda x: x%3 != 0))))
+
+    #print(", ".join(
+    #    map(str, 
+    #        remove_if( dfs_nodes(t), 
+    #            lambda x: x.data%3 != 0))))
 
 
 
