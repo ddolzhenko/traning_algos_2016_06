@@ -33,6 +33,10 @@ namespace DLL {
         , next(next_)
         {}
 
+        #ifndef NDEBUG
+            vitrual void DUMMY_DDDDDDDverhkvuioerovued() {};
+        #endif
+
         Node* next;
         Node* prev;
     };
