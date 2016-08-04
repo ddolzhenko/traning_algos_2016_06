@@ -25,6 +25,17 @@ def dfs_post_order(tree, visit):
 		dfs_post_order(tree.right, visit)
 		visit(tree)
 
+def dfs_nodes(tree):
+	if tree:
+		yield from dfs_nodes(tree.left)
+		yield tree
+		yield from dfs_nodes(tree.right)
+
+def remove_if(seq, pred):
+	for x in seq:
+		if not pred(x):
+			yield x
+
 def create_tree():
 	t = Tree(8,
 			Tree(3,
@@ -40,11 +51,27 @@ def create_tree():
 
 def main():
     t = create_tree()
-    dfs_pre_order(t, print)
+    
+    #dfs_pre_order(t, print)
+    #print("****************************")
+    #dfs_in_order(t, print)
+    #print("****************************")
+    #dfs_post_order(t, print)
+    #print("****************************")
+    
+    for node in dfs_nodes(t):
+    	print(node)
     print("****************************")
-    dfs_in_order(t, print)
+    print("---".join(map(str, dfs_nodes(t))))
     print("****************************")
-    dfs_post_order(t, print)
+    it = dfs_nodes(t)
+    for x in range(4):
+    	print (next(it))
+    print("****************************")
+    for x in remove_if(dfs_nodes(t), lambda x: x.data%3 != 0):
+    	print (x)
+    print("****************************")
+    print(", ".join(map(str, remove_if(dfs_nodes(t), lambda x: x.data%3 != 0))))
     print("****************************")
 
 if __name__ == '__main__':
