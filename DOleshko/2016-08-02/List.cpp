@@ -44,7 +44,7 @@ namespace DLL {
     };
 
     template <class T>
-    insert_after(Node<T>* who, const Node<T>* what) {
+    insert_after(* who, const Node<T>* what) {
         assert(who != nullptr);
 
         what->next = who->next;
@@ -76,6 +76,24 @@ namespace DLL {
     }
 
     template class<T>
+    struct ListIterator
+    {
+    public:
+        ListIterator(): m_node(nullptr) {}
+
+
+
+    private:
+        friend class List<T>;
+
+        bool is_valid const {
+            return m_node != nullptr;
+        }
+
+    };
+
+
+    template class<T>
     class List
     {
     public:  //types
@@ -98,8 +116,8 @@ namespace DLL {
         bool empty() const          { return size() == 0; }
 
     public:  //iterators
-        iterator begin()            { return ++iterator(m_dummy); }
-        iterator end()              { return iterator(m_dummy); }
+        iterator begin()            { return ++iterator(&m_dummy); }
+        iterator end()              { return iterator(&m_dummy); }
 
         reference front()           { return *begin(); }
         reference back()            { return *(--end()); }
@@ -108,29 +126,36 @@ namespace DLL {
         void push_front(const_reference x) {
             assert(validate_invariant);
 
-            auto node = new DataNode<T>(x);
-            DLL::insert_after(m_dummy, node);
+            DLL::insert_after(m_dummy, new DataNode<T>(x));
             ++m_size;
-            
+
             assert(validate_invariant);
         }
 
         iterator insert(iterator where, const_reference x) {
-            Node<T>* result = nullptr;
+            assert(validate_invariant);
 
-            if (m_head == nullptr) {
-                result = m_head = m_tail = new Node<T>(x);
-            } else {
-                result = DLL::insert_before(where.m_node, x);
-
-                if (where.m_node == m_head) {
-                    m_head = result;
-                }
-                if (where. m_node == m_tail) {
-                    m_tail = result;
-                }
-            }
+            auto result = DLL::insert_before(where.m_node, new DataNode<T>(x));
             ++m_size;
+
+            assert(validate_invariant);
+            return result;
+        }
+
+        void push_front(const_reference x) {
+            assert(validate_invariant);
+
+            insert();
+
+            assert(validate_invariant);
+        }
+
+        void push_back(const_reference x) {
+            assert(validate_invariant);
+
+            insert();
+
+            assert(validate_invariant);
         }
 
     private:
