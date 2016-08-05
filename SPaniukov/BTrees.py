@@ -4,6 +4,7 @@ class Tree:
 		self.data = data
 		self.left = left
 		self.right = right
+	
 	def __str__(self):
 		return str(self.data)
 
@@ -13,6 +14,25 @@ def dfs_pre_order(tree, visit):
 		dfs_pre_order(tree.left, visit)
 		dfs_pre_order(tree.right, visit)
 
+def dfs_pre_order_imperative(tree):
+	if tree:
+		queue = Queue()
+		queue.push(tree)
+		while not queue.empty():
+			node = queue.pop_back()
+			while node:
+				yield node
+				if node.right:
+					queue.push(node.right)
+				if node.left:
+					node = node.left
+				elif node.right:
+					if queue._data[-1] == node.right:
+						queue.pop_back()
+					node = node.right
+				else:
+					node = None
+				
 def dfs_in_order(tree, visit):
 	if tree:
 		dfs_in_order(tree.left, visit)
@@ -49,8 +69,14 @@ class Queue:
 	def pop(self):
 		return self._data.pop(0)
 
+	def pop_back(self):
+		return self._data.pop()
+
 	def empty(self):
 		return len(self._data) == 0
+
+	def __str__(self):
+		return str(self._data)
 
 def bfs(tree):
 	queue = Queue()
@@ -73,43 +99,51 @@ def create_tree():
 						Tree(7))),
 		    Tree(10,
 		    	right=Tree(14,
-		    			Tree(13))))
+		    			Tree(13,
+		    				Tree(9,
+		    					left = Tree(5)),
+		    						Tree(11)))))
 	return t
 
 
 def main():
+	
     t = create_tree()
     
-    #dfs_pre_order(t, print)
-    #print("****************************")
+    dfs_pre_order(t, print)
+    print("****************************")
     #dfs_in_order(t, print)
     #print("****************************")
     #dfs_post_order(t, print)
     #print("****************************")
-    print("****************************")
-    for node in dfs_nodes(t):
-    	print(node)
+    #print("****************************")
+    #for node in dfs_nodes(t):
+    #	print(node)
     
-    print("****************************")
-    print("---".join(map(str, dfs_nodes(t))))
+    #print("****************************")
+    #print("---".join(map(str, dfs_nodes(t))))
     
-    print("****************************")
-    it = dfs_nodes(t)
-    for x in range(4):
-    	print (next(it))
+    #print("****************************")
+    #it = dfs_nodes(t)
+    #for x in range(4):
+    #	print (next(it))
+    #
+    #print("****************************")
+    #for x in remove_if(dfs_nodes(t), lambda x: x.data%3 != 0):
+    #	print (x)
     
-    print("****************************")
-    for x in remove_if(dfs_nodes(t), lambda x: x.data%3 != 0):
-    	print (x)
-    
-    print("****************************")
-    print(", ".join(map(str, remove_if(dfs_nodes(t), lambda x: x.data%3 != 0))))
+    #print("****************************")
+    #print(", ".join(map(str, remove_if(dfs_nodes(t), lambda x: x.data%3 != 0))))
 
-    print("****************************")
-    for x in bfs(t):
+    #print("****************************")
+    #for x in bfs(t): 
+    #	print(x)
+    #print("****************************")
+    #print(list(map(str, bfs(t))))
+    #print("****************************")
+    for x in dfs_pre_order_imperative(t):
     	print(x)
-    print(list(map(str, bfs(t))))
-    
+
 if __name__ == '__main__':
 	main()
 
