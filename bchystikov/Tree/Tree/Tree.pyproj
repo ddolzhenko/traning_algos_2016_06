@@ -25,7 +25,6 @@
     <Compile Include="bst.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="graphics.py" />
     <Compile Include="Tree.py" />
   </ItemGroup>
   <PropertyGroup>
