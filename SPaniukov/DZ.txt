@@ -1,6 +1,5 @@
-написать:
-
-императивный вариант обхода дерева
-
 Cource
 SICP MIT OCW
+
+delete element from BinTree = fix updates parents
+optimize remove(leaf)
