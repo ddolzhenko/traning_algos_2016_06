@@ -1,11 +1,64 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
+class Queue:
+    def __init__(self):
+        self._data = []
+
+    def push(self, x):
+        self._data.append(x)
+
+    def pop(self):
+        return self._data.pop(0)
+
+    def empty(self):
+        return len(self._data) == 0
+
+#############################################################
+
 class Tree:
     def __init__(self, data, left=None, right=None):
         self.data = data
         self.left = left
         self.right = right
+        self.parent = None
+        if self.left:
+            self.left.parent = self
+        if self.right:
+            self.right.parent = self
+
+    def __lt__(self, other):
+        return self.data < other.data
 
     def __str__(self):
         return str(self.data)
+
+    def to_graph(self):
+        g = nx.Graph()
+        for node in dfs_nodes_inorder(self):
+            if node.left:
+                g.add_edge(node.data, node.left.data)
+            if node.right:
+                g.add_edge(node.data, node.right.data)
+        return g
+
+    def get_positions(node, positions, x, y):
+        if node:
+            node_size = 0.5
+            my_x = (x[1] + x[0]) / 2
+            my_y = y[0] + (node_size / 2)
+            positions[node.data] = (my_x, -my_y)
+            Tree.get_positions(node.left, positions, (x[0], my_x), (my_y, y[1]))
+            Tree.get_positions(node.right, positions, (my_x, x[1]), (my_y, y[1]))
+
+    def draw(self):
+        positions = {}
+        Tree.get_positions(self, positions, x=(0, 10), y=(0, 10))
+        g = self.to_graph()
+
+        plt.axis('on')
+        nx.draw_networkx(g, positions, node_size=1500, font_size=24, node_color='g')
+        plt.show()
 
 
 def dfs_pre_order(tree, visit):
@@ -33,22 +86,6 @@ def dfs_nodes_inorder(tree):
         yield from dfs_nodes_inorder(tree.right)
 
 
-def height(tree):
-    pass
-
-class Queue:
-    def __init__(self):
-        self._data = []
-
-    def push(self, x):
-        self._data.append(x)
-
-    def pop(self):
-        return self._data.pop(0)
-
-    def empty(self):
-        return len(self._data) == 0
-
 
 def bfs(tree): # breadth-first search
     queue = Queue()
@@ -61,6 +98,21 @@ def bfs(tree): # breadth-first search
             queue.push(node.right)
 
 
+def height(tree):
+    if not tree:
+        return 0
+    return 1 + max(height(tree.left), height(tree.right))
+
+
+#############################################################
+
+def is_bst(tree):
+    if not tree:
+        return True
+
+
+
+#############################################################
 
 def create_tree_1():
     t = Tree(8,
@@ -90,51 +142,16 @@ def create_tree_2():
                 
     return t
 
-    
-
-
-
-def list_iter(node):
-    if node:
-        yield node.next
-
-def remove_if(seq, pred):
-    for x in seq:
-        if not pred(x):
-            yield x
-
-def yield_experiments():
-    t = create_tree()
-    print("-----".join(map(str, dfs_nodes_inorder(t))))
-
-    it = dfs_nodes_inorder(t)
-    for x in range(4):
-        print(next(it))
-
-    print(", ".join(
-        map(str, 
-            remove_if(dfs_nodes_inorder(t), 
-                lambda x: x.data%3 != 0))))
-
-
-    print(", ".join(
-        map(str, 
-            remove_if([1,2,3,4,5,6,7, 99], 
-                    lambda x: x%3 != 0))))
-        
-    m = {
-        "k1" : 123,
-        "k2" : 321
-    }
-
-    print(m["k1"])
-    m['k3'] = 43
+#############################################################
+   
 
 def main():
     t = create_tree_2()
     
     print(list(map(str, dfs_nodes_inorder(t))))
     print(list(map(str, bfs(t))))
+
+
    
 
 if __name__ == '__main__':
