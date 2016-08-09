@@ -106,6 +106,20 @@ def delete(tree, x):
             node.parent.right = None
 
     elif is_nil(node.left):
+        node.parent
+
+def create_tree_3():
+    t = Tree(13)
+
+    for x in range(1, 10):
+        insert(t, x)
+
+def create_tree_4():
+    t = Tree(13)
+
+    ann =
+    for x in range(1, 10):
+        insert(t, x)
 
 def main():
     t = trees.create_tree_2()
