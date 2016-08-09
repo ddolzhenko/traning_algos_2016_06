@@ -17,32 +17,30 @@ class Tree:
 	
 	def __str__(self):
 		return str(self.data)
-		def to_graph(self):
-        g = nx.Graph()
-        for node in dfs_in_order(self):
-            if node.left:
-                g.add_edge(node.data, node.left.data)
-            if node.right:
-                g.add_edge(node.data, node.right.data)
-        return g
+		
+	def to_graph(self):
+		g = nx.Graph()
+		for node in dfs_in_order(self):
+			if node.parent:
+				g.add_edge(node.data, node.parent.data)
+		return g
+		
+	def get_positions(node, positions, x, y):
+		if node:
+			node_size = 0.5
+			my_x = (x[1] + x[0]) / 2
+			my_y = y[0] + (node_size / 2)
+			positions[node.data] = (my_x, -my_y)
+			Tree.get_positions(node.left, positions, (x[0], my_x), (my_y, y[1]))
+			Tree.get_positions(node.right, positions, (my_x, x[1]), (my_y, y[1]))
 
-    def get_positions(node, positions, x, y):
-        if node:
-            node_size = 0.5
-            my_x = (x[1] + x[0]) / 2
-            my_y = y[0] + (node_size / 2)
-            positions[node.data] = (my_x, -my_y)
-            Tree.get_positions(node.left, positions, (x[0], my_x), (my_y, y[1]))
-            Tree.get_positions(node.right, positions, (my_x, x[1]), (my_y, y[1]))
-
-    def draw(self):
-        positions = {}
-        Tree.get_positions(self, positions, x=(0, 10), y=(0, 10))
-        g = self.to_graph()
-
-        plt.axis('on')
-        nx.draw_networkx(g, positions, node_size=1500, font_size=24, node_color='g')
-        plt.show()
+	def draw(self):
+		positions = {}
+		Tree.get_positions(self, positions, x=(0, 10), y=(0, 10))
+		g = self.to_graph()
+		plt.axis('on')
+		nx.draw_networkx(g, positions, node_size=1500, font_size=24, node_color='g')
+		plt.show()
 
 def dfs_pre_order(tree):
 	if tree:
@@ -145,47 +143,50 @@ def create_tree():
 				Tree(15),
 				Tree(25,
 					Tree(19),
-					Tree(7))))
+					Tree(27))))
 	return t
 
 
 def main():
 	
-    t = create_tree()
-    
-    dfs_pre_order(t)
-    print("****************************")
-    #dfs_in_order(t, print)
-    #print("****************************")
-    #dfs_post_order(t, print)
-    #print("****************************")
-    #print("****************************")
-    #for node in dfs_nodes(t):
-    #	print(node)
-    
-    #print("****************************")
-    #print("---".join(map(str, dfs_nodes(t))))
-    
-    #print("****************************")
-    #it = dfs_nodes(t)
-    #for x in range(4):
-    #	print (next(it))
-    #
-    #print("****************************")
-    #for x in remove_if(dfs_nodes(t), lambda x: x.data%3 != 0):
-    #	print (x)
-    
-    #print("****************************")
-    #print(", ".join(map(str, remove_if(dfs_nodes(t), lambda x: x.data%3 != 0))))
+	t = create_tree()
 
-    #print("****************************")
-    #for x in bfs(t): 
-    #	print(x)
-    #print("****************************")
-    #print(list(map(str, bfs(t))))
-    #print("****************************")
-    for x in dfs_pre_order_imperative(t):
-    	print(x)
+	dfs_pre_order(t)
+	
+	print("****************************")
+	#dfs_in_order(t, print)
+	#print("****************************")
+	#dfs_post_order(t, print)
+	#print("****************************")
+	#print("****************************")
+	#for node in dfs_nodes(t):
+	#	print(node)
+
+	#print("****************************")
+	#print("---".join(map(str, dfs_nodes(t))))
+
+	#print("****************************")
+	#it = dfs_nodes(t)
+	#for x in range(4):
+	#	print (next(it))
+	#
+	#print("****************************")
+	#for x in remove_if(dfs_nodes(t), lambda x: x.data%3 != 0):
+	#	print (x)
+
+	#print("****************************")
+	#print(", ".join(map(str, remove_if(dfs_nodes(t), lambda x: x.data%3 != 0))))
+
+	#print("****************************")
+	#for x in bfs(t): 
+	#	print(x)
+	#print("****************************")
+	#print(list(map(str, bfs(t))))
+	#print("****************************")
+	for x in dfs_pre_order_imperative(t):
+		print(x)
+	t.draw()
+	
 
 if __name__ == '__main__':
 	main()

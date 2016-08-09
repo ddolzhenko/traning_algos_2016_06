@@ -79,8 +79,8 @@ def insert(tree, x):
 			return tree.right
 		else:
 			return insert(tree.right, x)
-	
 	return tree
+
 def remove(node):
 	assert is_bst(node) and not is_nil(node)
 	assert not is_nil(node.parent)
@@ -102,8 +102,9 @@ def remove(node):
 		node.left.parent = node.parent
 	else:
 		leaf = max_node(node.left)
-		tree.data, leaf.data = leaf.data, tree.data
+		node.data, leaf.data = leaf.data, node.data
 		remove(leaf)
+		
 def create_tree_3():
 	t = Tree(13)
 	for x in range(1, 10):
@@ -111,8 +112,11 @@ def create_tree_3():
 	return t
 
 def create_tree_4():
-	t = Tree(13)
-	for x in range(1, 10):
+	t = Tree(46)
+	import random
+	arr = list(range(1, 80))
+	random.shuffle(arr)
+	for x in arr:
 		insert(t, x)
 	return t
 
@@ -120,11 +124,21 @@ def main():
 	t = BTrees.create_tree()
 
 	insert(t, 12)
+	insert(t, 56)
+	insert(t, -23)
+	insert(t, 10)
 
-	print (list(map(str, BTrees.dfs_in_order(t))))
-	print (list(map(str, iterate_forward(t))))
-	print (list(reversed(list(map(str, iterate_backward(t))))))
-	print (find(t, 10))
+	#print (list(map(str, BTrees.dfs_in_order(t))))
+	#print (list(map(str, iterate_forward(t))))
+	#print (list(reversed(list(map(str, iterate_backward(t))))))
+	#print (find(t, 10))
+	t.draw()
+
+	remove(find(t, 25))
+	t.draw()
+
+	create_tree_4().draw()
+
 
 if __name__ == '__main__':
 	main()
