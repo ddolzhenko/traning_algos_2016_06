@@ -62,7 +62,7 @@ def bfs(tree): # breadth-first search
 
 
 
-def create_tree():
+def create_tree_1():
     t = Tree(8,
             Tree(3,
                 Tree(1),
@@ -73,6 +73,26 @@ def create_tree():
                 right=Tree(14,
                         Tree(13))))
     return t
+
+    
+def create_tree_2():
+    t = Tree(13,
+            Tree(8,
+                Tree(1,
+                    right=Tree(6)),
+                Tree(11,
+                    Tree(10))),
+            Tree(17,
+                Tree(15),
+                Tree(25,
+                    Tree(19),
+                    Tree(27))))
+                
+    return t
+
+    
+
+
 
 def list_iter(node):
     if node:
@@ -111,15 +131,11 @@ def yield_experiments():
     m['k3'] = 43
 
 def main():
-    t = create_tree()
+    t = create_tree_2()
     
     print(list(map(str, dfs_nodes_inorder(t))))
     print(list(map(str, bfs(t))))
-
-    squares = [x.data*x.data for x in bfs(t)]
-
-    squares = { str(x) : x for x in squares if x > 100}
-    print(squares)
+   
 
 if __name__ == '__main__':
     main()
