@@ -68,6 +68,8 @@ def find(tree, x):
     return tree
 
 def insert(tree, x):
+    assert is_bst(tree)
+
     if is_nil(tree):
         return Tree(x)
 
@@ -86,15 +88,65 @@ def insert(tree, x):
         else:
             return insert(tree.right, x)
 
+    assert is_bst(tree)
     return tree
 
+def remove(node):
+    assert is_bst(node) and not is_nil(node)
+        
+    assert not is_nil(node.parent)
+
+    def assign_to_parent(what):
+        if node.parent.left == node:
+            node.parent.left = what
+        else:
+            node.parent.right = what
+
+    if is_nil(node.left) and is_nil(node.right):
+        assign_to_parent(None)
+    elif is_nil(node.left):
+        assign_to_parent(node.right)
+        node.right.parent = node.parent
+    elif is_nil(node.right):
+        assign_to_parent(node.left)
+        node.left.parent = node.parent
+    else:
+        leaf = max_node(node.left)
+        print(leaf)
+        node.data, leaf.data = leaf.data, node.data
+        remove(leaf)
+   
+    assert is_bst(node)
+
+
+def create_tree_3():
+    t = Tree(13)
+    for x in range(1, 10):
+        insert(t, x)
+    return t
+
+def create_tree_4():
+    t = Tree(13)
+    import random
+    arr = list(range(1, 26))
+    random.shuffle(arr)
+    for x in arr:
+        insert(t, x)
+    return t
 
 
 def main():
     t = trees.create_tree_2()
     
 
+    insert(t, -1)
     insert(t, 12)
+    insert(t, 28)
+    insert(t, 18)
+    insert(t, 26)
+    
+
+    remove(find(t, 25))
 
     print(list(map(str, trees.dfs_nodes_inorder(t))))
     print(list(map(str, iterate_forward(t))))
@@ -105,6 +157,8 @@ def main():
     print(is_bst(t))
 
     t.draw()
+    create_tree_3().draw()
+    create_tree_4().draw()
 
 if __name__ == '__main__':
     main()
