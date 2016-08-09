@@ -12,6 +12,7 @@ def min_node(tree):
 	return tree
 
 def max_node(tree):
+	assert not is_nil(tree)
 	while tree.right:
 		tree = tree.right
 	return tree
@@ -19,7 +20,6 @@ def max_node(tree):
 def is_bst(tree):
 	if not tree:
 		return True
-
 	return (is_nil(tree.left) or max_node(tree.left) < tree) and\
 		   (is_nil(tree.right) or tree < min_node(tree.right)) and\
 		   is_bst(tree.left) and is_bst(tree.right)
@@ -79,6 +79,7 @@ def insert(tree, x):
 			return tree.right
 		else:
 			return insert(tree.right, x)
+	assert is_bst(tree)
 	return tree
 
 def remove(node):
@@ -104,6 +105,7 @@ def remove(node):
 		leaf = max_node(node.left)
 		node.data, leaf.data = leaf.data, node.data
 		remove(leaf)
+	assert is_bst(node)
 		
 def create_tree_3():
 	t = Tree(13)
