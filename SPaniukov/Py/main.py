@@ -33,11 +33,19 @@ def create_tree_4():
 		insert(t, x)
 	return t
 
+def create_tree_5():
+	t = Tree(14, 
+			Tree(7, 
+				Tree(1),
+				Tree(2)),
+			Tree(9))
+	return t
+
 def main():
 	
-	t = create_tree()
+	#t = create_tree()
 
-	BTA.dfs_pre_order(t)
+	#BTA.dfs_pre_order(t)
 	
 	print("****************************")
 	#dfs_in_order(t, print)
@@ -69,24 +77,28 @@ def main():
 	#print("****************************")
 	#print(list(map(str, bfs(t))))
 	#print("****************************")
-	for x in BTA.dfs_pre_order_imperative(t):
-		print(x)
+	#for x in BTA.dfs_pre_order_imperative(t):
+	#	print(x)
+	#t.draw()
+
+	#t = create_tree()
+
+	#BTA.insert(t, 12)
+	#BTA.insert(t, 56)
+	#BTA.insert(t, -23)
+	#BTA.insert(t, 10)
+
+	#print (list(map(str, BTA.dfs_in_order(t))))
+	#print (list(map(str, BTA.iterate_forward(t))))
+	#BTA.remove(BTA.find(t, 25))
+	#print (list(reversed(list(map(str, BTA.iterate_backward(t))))))
+	#print (BTA.find(t, 10))
+	t = create_tree_5()
 	t.draw()
-
-	t = create_tree()
-
-	BTA.insert(t, 12)
-	BTA.insert(t, 56)
-	BTA.insert(t, -23)
-	BTA.insert(t, 10)
-
-	print (list(map(str, BTA.dfs_in_order(t))))
-	print (list(map(str, BTA.iterate_forward(t))))
-	BTA.remove(BTA.find(t, 25))
-	print (list(reversed(list(map(str, BTA.iterate_backward(t))))))
-	print (BTA.find(t, 10))
+	BTA.rotate_left(BTA.find(t, 7))
+	t.draw()
+	BTA.rotate_right(BTA.find(t, 7))
 	t.draw()
 	
-
 if __name__ == '__main__':
 	main()
