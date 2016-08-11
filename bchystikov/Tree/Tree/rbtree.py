@@ -1,10 +1,10 @@
 import bst
 
-class BaseTree:
-    def __init__(self, nil = None):
+class BaseTree():
+    def __init__(self, nil=None):
         self.parent = nil
-        self.left   = nil
-        self.right  = nil
+        self.left = nil
+        self.right = nil
         self._is_black = True
 
     @property
@@ -19,9 +19,20 @@ class BaseTree:
     def is_nil(self):
         return self == Tree.nil
 
+    def __lt__(self, other):
+        return True
+
+
 class Tree(BaseTree):
 
     nil = BaseTree(None)    #analog static, belong to class, not objects
+
+    def __lt__(self, other):
+        return self.data < other.data
+
+    @property
+    def is_valid():
+        return is_rbtree(self)
 
     def is_bst(tree):
         #def is_nil(x):
@@ -34,10 +45,10 @@ class Tree(BaseTree):
 
 
 def is_rbtree(tree):
-    assert is_bst(tree)
+    assert bst.is_bst(tree)
     
     def cond_4_6(tree):
-        assert isinstance(tree, Tree)
+        assert isinstance(tree, BaseTree)
 
         if tree.is_nil:
             return tree.is_black
@@ -58,8 +69,18 @@ def is_rbtree(tree):
 
     return cond_4_6(tree) and black_route(tree)[0]
   
+def insert(root, x):
+    assert root.is_valid
+    
+    node = bst.insert(root)
+    
+
+    assert root.is_valid
+
 def main():
-    pass
+    t = Tree(12)
+    is_rbtree(t)
+    #t.insert(Tree(10))
 
 if __name__ == '__main__':
     main()
