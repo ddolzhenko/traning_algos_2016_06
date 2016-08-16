@@ -127,12 +127,64 @@ def is_rbtree(tree):
 
     return cond_4_6(tree) and black_route(tree)[0]
 
+def is_root(node):
+    pass
+
+def fix_rbtree(node):
+    assert node.is_red
+
+    # case root
+    if is_root(node):
+        return
+
+    dad = node.parent
+
+    # case 0
+    if dad.is_black:
+        return
+
+    # else parent is red
+    if is_root(dad): 
+        dad.flip_color()
+        return
+
+    grandpa = dad.parent
+    if dad = grandpa.left:
+        uncle = grandpa.right
+    else:
+        uncle = grandpa.left
+
+    # case 1
+    if uncle.is_red:
+        dad.flip_color()
+        uncle.flip_color()
+        grandpa.flip_color()
+        fix_rbtree(grandpa)
+        return
+
+    # case 2 (uncle is black)
+    if dad == grandpa.right:
+        y = bst.rorate_left(grandpa)
+        node.flip_color()
+        fix_rbtree(y)
+        return
+    else:
+        y = bst.rotate_right
+        node.flip_color()
+        fix_rbtree(y)
+        return
+
+
+
+
+
 
 def insert(root, x):
     assert root.is_valid
 
     node = bst.insert(root, x)
-
+    node.is_black = False
+    fix_rbtree(node)
 
     assert root.is_valid
 
