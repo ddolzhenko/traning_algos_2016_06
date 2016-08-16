@@ -18,9 +18,13 @@ def max_node(tree):
     return tree
 
 
-def is_bst(tree):
+def is_bst(tree, is_nil=is_nil):
     if is_nil(tree):
         return True
+
+    print(is_nil(tree))
+    print(is_nil(tree.left))
+    print(is_nil(tree.right))
     return  (is_nil(tree.left) or   max_node(tree.left) < tree)  and \
             (is_nil(tree.right) or  tree < min_node(tree.right)) and \
             is_bst(tree.left) and is_bst(tree.right)
@@ -118,6 +122,62 @@ def remove(node):
    
     assert is_bst(node)
 
+def rotate_left(x):
+    assert is_bst(x)
+    assert not is_nil(x)
+    assert not is_nil(x.right)
+
+    y = x.right
+    a = x.left
+    b = y.left
+    c = y.right
+
+    if not is_nil(x.parent):
+        if x == x.parent.left:
+            x.parent.left = y
+        else:
+            x.parent.right = y
+
+    y.parent = x.parent
+    y.left = x
+    
+    x.parent = y
+    x.right = b
+
+    if not is_nil(b):
+        b.parent = x
+
+    assert is_bst(y)
+    return y
+
+def rotate_right(y):
+    assert is_bst(y)
+    assert not is_nil(y)
+    assert not is_nil(y.left)
+
+    x = y.left
+    a = x.left
+    b = x.right
+    c = y.right
+
+    if not is_nil(y.parent):
+        if y == y.parent.left:
+            y.parent.left = x
+        else:
+            y.parent.right = x
+
+    x.parent = y.parent
+    x.right = y
+
+    y.parent = x
+    y.left = b
+    
+    if not is_nil(b):
+        b.parent = y
+
+    assert is_bst(x)
+    return x
+
 
 def create_tree_3():
     t = Tree(13)
@@ -155,10 +215,14 @@ def main():
     print(find(t, 10))
 
     print(is_bst(t))
-
+    
     t.draw()
-    create_tree_3().draw()
-    create_tree_4().draw()
+    rotate_left(find(t, 17))
+    t.draw()
+    rotate_right(find(t, 19))
+    t.draw()
+    # create_tree_3().draw()
+    # create_tree_4().draw()
 
 if __name__ == '__main__':
     main()
