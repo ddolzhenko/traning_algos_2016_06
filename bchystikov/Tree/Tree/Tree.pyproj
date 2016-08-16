@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9781e2da-429d-454d-95ef-778c9a043633</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Tree.py</StartupFile>
+    <StartupFile>rbtree.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="bst.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="rbtree.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tree.py" />
