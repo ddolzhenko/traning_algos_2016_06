@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
+
 class Queue:
     def __init__(self):
         self._data = []
@@ -18,6 +19,7 @@ class Queue:
 
 class Tree:
     def __init__(self, data, left=None, right=None):
+        self.g = None
         self.data = data
         self.left = left
         self.right = right
@@ -36,10 +38,8 @@ class Tree:
     def to_graph(self):
         g = nx.Graph()
         for node in dfs_nodes_inorder(self):
-            if node.left:
-                g.add_edge(node.data, node.left.data)
-            if node.right:
-                g.add_edge(node.data, node.right.data)
+            if node.parent:
+                g.add_edge(node.data, node.parent.data)
         return g
 
     def get_positions(node, positions, x, y):
