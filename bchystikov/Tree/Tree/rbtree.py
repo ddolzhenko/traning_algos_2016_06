@@ -40,8 +40,8 @@ class Tree(BaseTree):
         return bst.is_nil(tree, lambda x: x.is_nil)
 
     def __init__(self, x):
-        self.data = x
         super().__init__(Tree.nil)
+        self.data = x
 
 
 def is_rbtree(tree):
@@ -69,11 +69,61 @@ def is_rbtree(tree):
 
     return cond_4_6(tree) and black_route(tree)[0]
   
-def insert(root, x):
+def is_root(node):
+    pass
+
+def fix_rbtree(node):
+    #assert !node.is_black
+
+    #case root
+    if is_root(node):
+        return
+
+    dad = node.parent
+
+    # case 0
+    if dad.is_black:
+        return
+
+    grandpa = node.parent.parent
+
+    if grandpa.is_nil:      #dad is root
+        dad.flip_color
+
+    if dad == grandpa.left:
+        uncle = grandpa.red
+    else:
+        uncle = grandpa.left
+
+    #parent is red
+    #case 1
+    if uncle(node).is_red:
+        dad.flip_color()
+        uncle.flip_color()
+        grandparent.flip_color()
+        fix_rbtree(grandparent)
+        return
+        
+    #case 2(uncle is black)
+    if dad == grandpa.right:
+        y = bst.rotate_left(grandpa)
+        node.flip_color()
+        fix_rbtree(y)
+        return
+    else:
+        y = bst.rotate_right(grandpa)
+        node.flip_color()
+        fix_rbtree(y)
+        return
+
+
+
+def insert(root, x):    #not finished
     assert root.is_valid
     
     node = bst.insert(root)
-    
+    node.is_black = False
+    fix_rbtree(node)
 
     assert root.is_valid
 
