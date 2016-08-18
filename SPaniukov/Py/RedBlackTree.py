@@ -1,8 +1,30 @@
 import binaryTreesAlgorithms as BTA
+import networkx as nx
+import matplotlib.pyplot as plt
+from binaryTreesAlgorithms import max_node, min_node
 
+#def is_bst(tree):
+#	return BTA.is_bst(tree, lambda x: x.is_nil)
+def is_bst(tree):
+	if tree.is_nil:
+		return True
 
-def is_nil(tree):
-	return BTA.is_bst(tree, lambda x: x.is_nil)
+	print(type(tree))
+	print(type(tree.left))
+	print(type(tree.right))
+	print(max_node(tree.left) < tree)
+
+	mn = min_node(tree.right)
+	print(mn)
+	print(type(mn))
+	return  (max_node(tree.left) < tree < min_node(tree.right))  and \
+		is_bst(tree.left) and is_bst(tree.right)
+
+def dfs_nodes_inorder(tree):
+	if not tree.is_nil:
+		yield from dfs_nodes_inorder(tree.left)
+		yield tree
+		yield from dfs_nodes_inorder(tree.right)
 
 class BaseTree():
 	
@@ -24,16 +46,24 @@ class BaseTree():
 	def is_nil(self):
 		return self == Tree.nil
 
-class Tree(BaseTree):
+	def __lt__(self, other):
+		return True
 
+	def __str__(self):
+		return 'nil'
+
+class Tree(BaseTree):
 	nil = BaseTree()
 
 	def __init__(self, x):
-		super.__init__(Tree.nil)
+		super().__init__(Tree.nil)
 		self.data = x
 
 	def __lt__(self, other):
 		return self.data < other.data
+    
+	def __str__(self):
+		return str(self.data)
 
 	@property
 	def is_valid(self):
@@ -41,10 +71,35 @@ class Tree(BaseTree):
 
 	@property
 	def flip_color(self):
-			self._is_black = not self._is_black
+		self._is_black = not self._is_black
+
+	def to_graph(self):
+		g = nx.Graph()
+		for node in dfs_nodes_inorder(self):
+			if not node.parent.is_nil:
+				g.add_edge(node.data, node.parent.data)
+		return g
+
+	def get_positions(node, positions, x, y):
+		if not node.is_nil:
+			node_size = 0.5
+			my_x = (x[1] + x[0]) / 2
+			my_y = y[0] + (node_size / 2)
+			positions[node.data] = (my_x, -my_y)
+			Tree.get_positions(node.left, positions, (x[0], my_x), (my_y, y[1]))
+			Tree.get_positions(node.right, positions, (my_x, x[1]), (my_y, y[1]))
+
+	def draw(self):
+		positions = {}
+		Tree.get_positions(self, positions, x=(0, 10), y=(0, 10))
+		g = self.to_graph()
+
+		plt.axis('on')
+		nx.draw_networkx(g, positions, node_size=1500, font_size=24, node_color='g')
+		plt.show()
 	
 def is_rbtree(tree):
-	assert is_bst(tree)
+#	assert is_bst(tree)
 
 	def cond_4_6(tree):
 		assert isinstance(tree, Tree)
@@ -66,6 +121,7 @@ def is_rbtree(tree):
 		return True, 0
 
 	return cond_4_6(tree) and black_route(tree)[0]
+
 def function():
 	pass
 
@@ -109,11 +165,13 @@ def fix_rbtree(node):
 	fix_rbtree(node)
 	return
 
-def insert(root):
-	assert root.is_valid
+def insert(root, x):
+#	assert root.is_valid
 
-	node = BTA.insert(root)
+	node = BTA.insert(root, x)
 	node.is_black = False
+	fix_rbtree(node)
+
 	assert root.is_valid
 
 def create_rbtree():
@@ -121,10 +179,18 @@ def create_rbtree():
 
 def main():
 	t = Tree(13)
+	t.right = Tree(17)
+	t.right.parent = t
+	t.right._is_black = False
 
-	#insert(t, 10)
+	print(t.data, t.right.data, t.left < t < t.right)
 
-	t.drow()
+# exit()
+
+
+	insert(t, 10)
+
+	t.draw()
 
 
 if __name__ == "__main__":

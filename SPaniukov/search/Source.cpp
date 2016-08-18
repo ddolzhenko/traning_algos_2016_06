@@ -41,10 +41,13 @@ int main()
 	DLL::CList<int> list1 = DLL::CList<int>();
 	DLL::ListIterator<int> begin = list1.begin();
 	DLL::ListIterator<int> end = list1.end();
-
-	if (begin == end) cout << "welcome to the club" << endl;
-
-
+	list1.push_back(12);
+	list1.push_back(12);
+	list1.push_back(12);
+	list1.pop_back();
+	if (begin.getNode() == end.getNode()) cout << "welcome to the club" << endl;
+	cout << "list1 begin: " << *++begin << endl;
+	cout << "list1 end: " << *(--end) << endl;
 	char ch;
    cin >> ch;
    
