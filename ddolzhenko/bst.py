@@ -71,7 +71,7 @@ def find(tree, x):
 
     return tree
 
-def insert(tree, x):
+def insert(tree, x, is_nil=is_nil):
     assert is_bst(tree)
 
     if is_nil(tree):

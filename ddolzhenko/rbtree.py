@@ -29,8 +29,6 @@ def dfs_nodes_inorder(tree):
         yield tree
         yield from dfs_nodes_inorder(tree.right)
 
-
-
 class BaseTree:
     def __init__(self, nil=None):
         self.parent = nil
@@ -77,6 +75,7 @@ class Tree(BaseTree):
     def to_graph(self):
         g = nx.Graph()
         for node in dfs_nodes_inorder(self):
+            assert not node.is_nil
             if not node.parent.is_nil:
                 g.add_edge(node.data, node.parent.data)
         return g
@@ -149,7 +148,7 @@ def fix_rbtree(node):
         return
 
     grandpa = dad.parent
-    if dad = grandpa.left:
+    if dad == grandpa.left:
         uncle = grandpa.right
     else:
         uncle = grandpa.left
@@ -180,13 +179,13 @@ def fix_rbtree(node):
 
 
 def insert(root, x):
-    assert root.is_valid
+    # assert root.is_valid
 
-    node = bst.insert(root, x)
+    node = bst.insert(root, x, is_nil = lambda x: x.is_nil)
     node.is_black = False
     fix_rbtree(node)
 
-    assert root.is_valid
+    # assert root.is_valid
 
 
 def main():
@@ -196,7 +195,7 @@ def main():
     t.right.parent = t
     t.right._is_black = False
     
-    print(t.data, t.right.data, t.left < t < t.right)
+    # print(t.data, t.right.data, t.left < t < t.right)
 
     # exit()
 
