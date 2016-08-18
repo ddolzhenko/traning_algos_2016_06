@@ -40,12 +40,12 @@ public:
 		typedef storage_type::iterator    storage_iterator;
 
 		iterator(storage_iterator si, bucket_iterator bi, bucket_iterator be)
-		: m_bucket(si)
-		, m_element(bi)
-		, m_bucket_end(be)
-		{
-			fix_forward();
-		}
+			: m_bucket(si)
+			, m_element(bi)
+			, m_bucket_end(be)
+			{
+				fix_forward();
+			}
 
 		bool operator==(const iterator& other)
 		{
