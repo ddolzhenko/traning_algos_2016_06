@@ -154,6 +154,7 @@
     <ClInclude Include="my_radix_sort.h" />
     <ClInclude Include="radix_sort.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="rb_tree.h" />
     <ClInclude Include="sorted_vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
