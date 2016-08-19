@@ -16,5 +16,8 @@
     <ClInclude Include="vector.hpp" />
     <ClInclude Include="sortedVector.hpp" />
     <ClInclude Include="CList.hpp" />
+    <ClInclude Include="hash_map.hpp" />
+    <ClInclude Include="map.hpp" />
+    <ClInclude Include="rb_tree.hpp" />
   </ItemGroup>
 </Project>

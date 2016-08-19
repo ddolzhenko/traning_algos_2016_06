@@ -1,31 +1,31 @@
 #ifndef HASH_MAP_HPP
 #define HASH_MAP_HPP
-
-
+#include <deque>
+using namespace std;
 template <class TKey, class TValue, class THasher>
 class CHashMap
 {
 public:
-	typedef size_t                           size_type;
-	typedef TKey                              key_type;
-	typedef std::pair<const TKey, TValue>   value_type;
-	typedef value_type&                      reference;
-	typedef THasher                          hash_type;
-	typedef hash_type<TKey, TValue, THasher> self_type;
-	typedef std::deque<value_type>         bucket_type;
-	typedef std::vector<bucket_type>      storage_type;
+	typedef size_t                              size_type;
+	typedef TKey                                 key_type;
+	typedef std::pair<const TKey, TValue>      value_type;
+	typedef value_type&                         reference;
+	typedef CHashMap<TKey, TValue, THasher>     hash_type;
+	typedef hash_type                           self_type;
+	typedef std::deque<value_type>            bucket_type;
+	typedef std::vector<bucket_type>         storage_type;
 
 	CHashMap(size_type bucket_count = 64, hash_type hasher = hash_type())
 		: m_buckets(bucket_count, bucket_type())
 		, m_hasher(hasher)
 		{}
 
-	~CHashMap() = default;
+	~CHashMap()                                = default;
 
-	CHashMap(const self_type&) = default;
-	CHashMap(self_type&&) = default;
-	self_type& operator=(const self_type&) = default;
-	self_type& operator=(self_type&&) = default;
+	CHashMap(const self_type&)                 = default;
+	CHashMap(self_type&&)                      = default;
+	self_type& operator=(const self_type&)     = default;
+	self_type& operator=(self_type&&)          = default;
 
 	void swap(self_type& rhs) 
 	{
@@ -36,8 +36,8 @@ public:
 	class iterator
 	{
 	public:
-		typedef	bucket_type::iterator      bucket_iterator;
-		typedef storage_type::iterator    storage_iterator;
+		typedef typename bucket_type::iterator    bucket_iterator;
+		typedef typename storage_type::iterator  storage_iterator;
 
 		iterator(storage_iterator si, bucket_iterator bi, bucket_iterator be)
 			: m_bucket(si)
@@ -127,7 +127,7 @@ public:
 		                                          {
 			                                      	return key == k;
 		                                          });
-		return iterator(bucket, elem);
+		return iterator(bucket, elem, m_buckets.end());
 	}
 
 	size_type hash(const key_type& key)
@@ -139,13 +139,13 @@ public:
 	{
 		auto bucket = m_buckets.begin() + hash(x.first);
 		bucket_type.push_front(x);
-		return iterator(bucket, bucket.begin());
+		return iterator(bucket, bucket.begin(), m_buckets.end());
 	}
 
 	iterator erase(iterator it)
 	{
 		auto new_pos = it.m_bucket.erase(it.m_element);
-		return iterator(it.m_bucket, new_pos);
+		return iterator(it.m_bucket, new_pos, m_buckets.end());
 	}
 
 	iterator remove(const key_type& key)
@@ -165,12 +165,12 @@ public:
 
 	iterator begin()
 	{
-		return iterator(m_buckets.begin(), m_buckets.begin()->begin());
+		return iterator(m_buckets.begin(), m_buckets.begin()->begin(), m_buckets.end());
 	}
 
 	iterator end()
 	{
-		return iterator(m_buckets.end());
+		return iterator(m_buckets.end(), NULL, m_buckets.end());
 	}
 private:
 

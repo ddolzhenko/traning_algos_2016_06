@@ -3,6 +3,7 @@
 
 #include "sortedVector.hpp"
 #include "CList.hpp"
+#include "hash_map.hpp"
 
 using namespace std;
 /*
